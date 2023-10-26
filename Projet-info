@@ -1,38 +1,74 @@
-import tkinter as tk
- 
-# Fonction associée au bouton 1
-def action_bouton1():
-    label.config(text="Bouton 1 cliqué!")
- 
-# Fonction associée au bouton 2
-def action_bouton2():
-    label.config(text="Bouton 2 cliqué!")
- 
-# Fonction associée au bouton 3
-def action_bouton3():
-    label.config(text="Bouton 3 cliqué!")
- 
-# Création de la fenêtre principale
-fenetre = tk.Tk()
-fenetre.title("Angry balls")    
- 
-# Création d'un libellé pour afficher des messages
-label = tk.Label(fenetre, text="Angry Balls!")
-label.config(font=("Arial", 40))
-label.config(fg="black")
-label.place(x=850, y=30)
+from tkinter import BOTH
+import customtkinter as ctk
 
+# Multi fenêtre
+class App(ctk.CTk) :
+    def __init__(self, *args, **kwargs) :
+        ctk.CTk.__init__(self, *args, **kwargs)
+        self.title("Angry Balls")
+        self.geometry("500x500")
+        self.resizable(0,0)
+    
 
- 
-# Création des trois boutons
-bouton1 = tk.Button(fenetre, text="Bouton 1", command=action_bouton1)
-bouton2 = tk.Button(fenetre, text="Bouton 2", command=action_bouton2)
-bouton3 = tk.Button(fenetre, text="Bouton 3", command=action_bouton3)
- 
-# Placement des boutons dans la fenêtre
-bouton1.pack()
-bouton2.pack()
-bouton3.pack()
- 
-# Lancement de la boucle principale de l'application
-fenetre.mainloop()
+# Création page Main
+        fr_main = ctk.CTkFrame(self)
+
+        btn_start = ctk.CTkButton(fr_main, text="Start",
+                                  command=lambda: self.show_frame(fr_main, fr_start))
+        btn_start.grid(row=5, column=5)
+        btn_help = ctk.CTkButton(fr_main, text="Help",
+                                  command=lambda: self.show_frame(fr_main, fr_help))
+        btn_help.grid(row=6, column=3)
+        btn_options = ctk.CTkButton(fr_main, text="Options",
+                                  command=lambda: self.show_frame(fr_main, fr_options))
+        btn_options.grid(row=6, column=7)
+        fr_main.pack(fill=BOTH, expand=True,)
+  
+# Création page Start
+        fr_start = ctk.CTkFrame(self)
+        btn_SM = ctk.CTkButton(fr_start, text="Back to start",
+                                 command=lambda: self.show_frame(fr_start, fr_main))
+        btn_SM.grid(row=10, column=10)
+        lbl_start = ctk.CTkLabel(fr_start, text="Main Page")  
+        
+# Création page Help
+        fr_help = ctk.CTkFrame(self)
+        btn_HM = ctk.CTkButton(fr_help, text="Back to start",
+                                 command=lambda: self.show_frame(fr_help, fr_main))
+        btn_HM.grid(row=10, column=10)
+        lbl_help = ctk.CTkLabel(fr_help, text="Main Page")
+# Créer un cadre pour encadrer les règles
+        cadre_regles = ctk.CTkFrame(fr_help)
+        cadre_regles.pack(padx=10, pady=10, fill="both", expand=True)  # pas de pack et grid ensemble
+
+# Ajouter un canevas pour afficher les règles
+        canevas_regles = ctk.CTkCanvas(cadre_regles, bg="white")
+        canevas_regles.pack(fill="both", expand=True)   # pas de pack et grid ensemble
+        titre_regles_label = ctk.CTkLabel(cadre_regles, text="Règles" , justify="center", font=("Arial",60))
+        texte_regles_label = ctk.CTkLabel(cadre_regles, text="""
+            Règle 1 : Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Règle 2 : Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Règle 3 : Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+            Règle 4 : Duis aute irure dolor in reprehenderit in voluptate velit.
+            Règle 5 : Excepteur side.
+            """ , justify="left", font=("Arial",30))
+
+        titre_regles_label.grid(row=10, column=10)   
+        texte_regles_label.grid(row=10, column=10)
+        
+# Création page Options
+        
+        fr_options = ctk.CTkFrame(self)
+        btn_OM = ctk.CTkButton(fr_options, text="Back to start",
+                                 command=lambda: self.show_frame(fr_options, fr_start))
+        btn_OM.grid(row=10, column=10)
+        lbl_options = ctk.CTkLabel(fr_options, text="Main Page")
+
+# Création showframe
+    def show_frame(self, frame_forget, frame_display):
+        frame_forget.pack_forget()
+        frame_display.pack(fill=BOTH, expand=True)
+
+   
+app = App()
+app.mainloop() 
