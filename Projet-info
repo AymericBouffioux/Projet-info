@@ -1,0 +1,38 @@
+import tkinter as tk
+ 
+# Fonction associée au bouton 1
+def action_bouton1():
+    label.config(text="Bouton 1 cliqué!")
+ 
+# Fonction associée au bouton 2
+def action_bouton2():
+    label.config(text="Bouton 2 cliqué!")
+ 
+# Fonction associée au bouton 3
+def action_bouton3():
+    label.config(text="Bouton 3 cliqué!")
+ 
+# Création de la fenêtre principale
+fenetre = tk.Tk()
+fenetre.title("Angry balls")    
+ 
+# Création d'un libellé pour afficher des messages
+label = tk.Label(fenetre, text="Angry Balls!")
+label.config(font=("Arial", 40))
+label.config(fg="black")
+label.place(x=850, y=30)
+
+
+ 
+# Création des trois boutons
+bouton1 = tk.Button(fenetre, text="Bouton 1", command=action_bouton1)
+bouton2 = tk.Button(fenetre, text="Bouton 2", command=action_bouton2)
+bouton3 = tk.Button(fenetre, text="Bouton 3", command=action_bouton3)
+ 
+# Placement des boutons dans la fenêtre
+bouton1.pack()
+bouton2.pack()
+bouton3.pack()
+ 
+# Lancement de la boucle principale de l'application
+fenetre.mainloop()
