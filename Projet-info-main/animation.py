@@ -203,7 +203,7 @@ class MyCanvas(ctk.Canvas):
         jambe_gauche = self.create_line(x - 10, y, x - 10, y + 20, fill='brown', width=2)
         jambe_droite = self.create_line(x + 10, y, x + 10, y + 20, fill='brown', width=2)
 
-        vie_rectangle = self.create_rectangle(x - 20, y - 50, x + 20, y - 45, fill='green')
+        vie_rectangle = self.create_rectangle(x - 20, y - 50, x + 20, y - 45, fill='red')
         
 
         vie_ennemi = 1.0
