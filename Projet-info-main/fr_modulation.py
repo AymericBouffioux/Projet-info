@@ -1,7 +1,11 @@
+
 from tkinter import BOTH
 import customtkinter as ctk
 
+def destroy_window(window):
+    window.destroy()
 
+# Fonction pour modifier la catapulte
 def create_cata():
 # Créer une fenêtre
     fr_modul_cata = ctk.CTk()
@@ -31,15 +35,14 @@ def create_cata():
     slider_vitesse_de_chargement.grid(row=7, column=0, padx=20, pady=20, sticky="ew")
     
     # bouton save
-    btn_SM = ctk.CTkButton(fr_modul_cata, text="save",
-                                 command=lambda: fr_modul_cata.destroy())
-    btn_SM.grid(row=0, column=0)
+    btn_MS1 = ctk.CTkButton(fr_modul_cata, text="sauver",
+                                 command=lambda: destroy_window(fr_modul_cata))
+    btn_MS1.grid(row=0, column=0)
 
     fr_modul_cata.mainloop()
-
-
-
     
+    
+# Fonction pour modifier les boules   
 def create_boules():
     # Créer une fenêtre
     fr_modul_boules = ctk.CTk()
@@ -78,8 +81,9 @@ def create_boules():
     slider_vitesse_de_chargement.grid(row=7, column=0, padx=20, pady=20, sticky="ew")
     
         # bouton save
-    btn_SM = ctk.CTkButton(fr_modul_boules, text="save",
-                                 command=lambda: fr_modul_boules.destroy())
-    btn_SM.grid(row=0, column=0)
+    btn_MS2 = ctk.CTkButton(fr_modul_boules, text="sauver",
+                                 command=lambda: fr_modul_boules)
+    btn_MS2.grid(row=0, column=0)
 
     fr_modul_boules.mainloop()
+    

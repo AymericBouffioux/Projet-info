@@ -1,6 +1,9 @@
+
 from tkinter import BOTH
 import customtkinter as ctk
 import fr_modulation
+import fr_th_la
+
 # Multi fenêtre
 class App(ctk.CTk) :
 
@@ -16,8 +19,6 @@ class App(ctk.CTk) :
         btn_start = ctk.CTkButton(fr_main, text="Start",height=50, width=100,
                                   command=lambda: self.show_frame(fr_main, fr_start))
         btn_start.grid(row=2, column=2)
-
-
         btn_help = ctk.CTkButton(fr_main, text="Help",
                                   command=lambda: self.show_frame(fr_main, fr_help))
         btn_help.grid(row=3, column=1)
@@ -31,34 +32,36 @@ class App(ctk.CTk) :
         cadre_boutons_map = ctk.CTkFrame(fr_start, fg_color="#ADD8E6")
         cadre_boutons_map.grid(row=3, column=0, padx=20, pady=(0, 20), sticky="ew", columnspan=5)
         # Créer les boutons "Map1", "Map2" et "Map3" centrés horizontalement dans le rectangle rose
-        bouton_map1 = ctk.CTkButton(fr_start, text="Map1", command=lambda: self.bouton_clic("Map1"))
-        bouton_map2 = ctk.CTkButton(fr_start, text="Map2", command=lambda: self.bouton_clic("Map2"))
-        bouton_map3 = ctk.CTkButton(fr_start, text="Map3", command=lambda: self.bouton_clic("Map3"))
+        bouton_map1 = ctk.CTkButton(fr_start, text="Carte 1", command=lambda: self.bouton_clic("Carte 1"))
+        bouton_map2 = ctk.CTkButton(fr_start, text="Carte 2", command=lambda: self.bouton_clic("Carte 2"))
+        bouton_map3 = ctk.CTkButton(fr_start, text="Carte 3", command=lambda: self.bouton_clic("Carte 3"))
         bouton_map1.grid(row=3, column=0, padx=20, pady=(0, 20), sticky="w")
         bouton_map2.grid(row=3, column=2, padx=20, pady=(0, 20), sticky="w")
         bouton_map3.grid(row=3, column=4, padx=20, pady=(0, 20), sticky="w")
 
 
         # Créer le bouton "Modulation des Boules" en haut à gauche
-        bouton_boules = ctk.CTkButton(fr_start, text="Modulation des Boules", command=lambda: self.bouton_clic("Modulation des Boules"))
+        bouton_boules = ctk.CTkButton(fr_start, text="Modulation des Boules", 
+                                      command=lambda: self.bouton_clic("Modulation des Boules"))
         # bouton_boules.configure(bg="blue", width=11, height=2)  # Changer la couleur, la largeur et la hauteur du bouton
         bouton_boules.grid(row=1, column=1, padx=20, pady=(0, 20), sticky="w")
         # Créer le bouton "Modulation des Catapultes" en haut à droite
-        bouton_catapultes = ctk.CTkButton(fr_start, text="Modulation des Catapultes", command=lambda: self.bouton_clic("Modulation des Catapultes"))
+        bouton_catapultes = ctk.CTkButton(fr_start, text="Modulation des Catapultes", 
+                                          command=lambda: self.bouton_clic("Modulation des Catapultes"))
         # bouton_catapultes.configure(bg="red", width=11, height=2)  # Changer la couleur, la largeur et la hauteur du bouton
         bouton_catapultes.grid(row=1, column=3, padx=20, pady=(0, 20), sticky="w")
         # Lancer la boucle principale de l'application
-        btn_SM = ctk.CTkButton(fr_start, text="Back to start",
+        btn_SM = ctk.CTkButton(fr_start, text="Retour page d'acceuil",
                                  command=lambda: self.show_frame(fr_start, fr_main))
         btn_SM.grid(row=0, column=0)
-        lbl_start = ctk.CTkLabel(fr_start, text="Main Page")  
         
 # Création page Help
         fr_help = ctk.CTkFrame(self)
-        btn_HM = ctk.CTkButton(fr_help, text="Back to start",
+        
+        btn_HM = ctk.CTkButton(fr_help, text="Retour page d'acceuil",
                                  command=lambda: self.show_frame(fr_help, fr_main))
         btn_HM.grid(row=0, column=0)
-        lbl_help = ctk.CTkLabel(fr_help, text="Main Page")
+        
         lbl_title_help = ctk.CTkLabel(fr_help, text="Règles" , justify="center", font=("Arial",60))
         lbl_title_help.grid(row=1, column=0, padx=20, pady=20, sticky="ew")
         texte_regles_label = ctk.CTkLabel(fr_help,height=200, width=100, text="""
@@ -72,69 +75,46 @@ class App(ctk.CTk) :
         
 # Création page Options
         fr_options = ctk.CTkFrame(self)
-
-        # Variable de contrôle pour le thème
-        theme_var = ctk.StringVar()
-        theme_var.set("light")  # "light" pour le thème "light", "dark" pour le thème "dark"
+        
+        btn_OM = ctk.CTkButton(fr_options, text="Retour page d'acceuil",
+                                 command=lambda: self.show_frame(fr_options, fr_main))
+        btn_OM.grid(row=0, column=0)
 
         # Widget de texte pour afficher le titre
         text_label = ctk.CTkLabel(fr_options, text="Page Option ",fg_color=("#ADD8E6", 'blue'))
-        text_label.grid(row=0, column=0, padx=20, pady=20, sticky="ew")
-        # Widget de texte pour afficher le titre thème
-        text_label1 = ctk.CTkLabel(fr_options, text="Thème ",fg_color=("#ADD8E6", 'blue'))
-        text_label1.grid(row=1, column=0, padx=20, pady=20, sticky="ew")
-
+        text_label.grid(row=1, column=0, padx=20, pady=20, sticky="ew")
+        
+        # Widget de texte pour afficher le bouton thème
+        text_bouton_th = ctk.CTkButton(fr_options, text="Thème",
+                                       command=lambda: self.bouton_clic("Thème"))
+        text_bouton_th.grid(row=2, column=0, padx=20, pady=20, sticky="ew")
+        # Widget de texte pour afficher le boutopn langues
+        text_bouton_th = ctk.CTkButton(fr_options, text="Langues",
+                                       command=lambda: self.bouton_clic("Langues"))
+        text_bouton_th.grid(row=3, column=0, padx=20, pady=20, sticky="ew")
 
 # Création showframe
     def show_frame(self, frame_forget, frame_display):
         frame_forget.pack_forget()
         frame_display.pack(fill=BOTH, expand=True)
-
-# Utilisation fr_modulation 
-    def bouton_clic(slef, nom):
+        
+# Utilisation de fonctions dans d'autres documents 
+    def bouton_clic(self, nom):
+        # Accès à fr_modulation
         if nom == "Modulation des Catapultes":
-            fr_modulation.create_cata()
-                
+            fr_modulation.create_cata()        
         elif nom == "Modulation des Boules":
             fr_modulation.create_boules()
+        # Accès à fr_th_la
+        elif nom == "Thème":
+            fr_th_la.change_theme()
+        elif nom == "Langues":
+            fr_th_la.change_language()
+            
+        print("Le bouton '%s' a été cliqué" % (nom))
 
-        print(f"Bouton {nom} cliqué")
-        
-# Fonction pour changer le thème
-    def change_theme(self):
-            theme = self.theme_var.get()
-            ctk.set_appearance_mode(theme)
-
-            # Radiobuttons pour choisir le thème
-            light_radio = ctk.CTkRadioButton(self.fr_options, text="Light / clair ", variable=self.theme_var, value="light", command=self.change_theme)
-            dark_radio = ctk.CTkRadioButton(self.fr_options, text="Dark / sombre ", variable=self.theme_var, value="dark", command=self.change_theme)
-            light_radio.grid(row=2, column=0, padx=20, pady=20, sticky="ew")
-            dark_radio.grid(row=3, column=0, padx=20, pady=20, sticky="ew")
-
-            # Widget de texte pour afficher le titre langue
-            text_label2 = ctk.CTkLabel(self.fr_options, text=" Langue " ,fg_color=("#ADD8E6", 'blue'))
-            text_label2.grid(row=4, column=0, padx=20, pady=20, sticky="ew")
-        
-# Fonction pour changer la langue
-    def change_language(self):
-        language = language_optionmenu.get()
-        if language == "Français":
-            self.text_label.configure(text="Page Option")
-            self.text_label.configure(text="thème")
-        elif language == "English":
-            self.text_label.configure(text="Option Page")
-            self.text_label1.configure(text="theme")
-
-        # OptionMenu pour choisir la langue
-        language_optionmenu = ctk.CTkOptionMenu(self.fr_options, values=["Français", "English"],command=self.change_language)
-        language_optionmenu.set("Français")
-        language_optionmenu.grid(row=5, column=0, padx=20, pady=20, sticky="ew")
-        btn_OM = ctk.CTkButton(self.fr_options, text="Back to start",
-                                 command=lambda: self.show_frame(self.fr_options, self.fr_main))
-        btn_OM.grid(row=10, column=10)
-        lbl_options = ctk.CTkLabel(self.fr_options, text="Main Page")
-
-
-
+            
+# Fermeture app   
 app = App()
 app.mainloop() 
+
