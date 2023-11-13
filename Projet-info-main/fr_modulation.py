@@ -53,9 +53,18 @@ def create_boules():
     text_label = ctk.CTkLabel( fr_modul_boules, text="poids ",fg_color=("#ADD8E6", 'blue'))
     text_label.grid(row=3, column=0, padx=20, pady=20, sticky="ew")
 
+
+
+
     # slider pr determiner l'elasticité
+   
     def slider_event(value):
-        print(value)
+        
+        print("voici la valeur=",value)
+
+    
+
+
     # slider pr determiner l'elasticité
     slider_elasticité = ctk.CTkSlider(fr_modul_boules, from_=0, to=5, command=slider_event)
     slider_elasticité.grid(row=4, column=0, padx=20, pady=20, sticky="ew")
