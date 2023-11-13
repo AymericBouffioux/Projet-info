@@ -110,6 +110,8 @@ class App(ctk.CTk) :
             fr_th_la.change_theme()
         elif nom == "Langues":
             fr_th_la.change_language()
+            
+        print("Le bouton '%s' a été cliqué" % (nom))
 
             
 # Fermeture app   
