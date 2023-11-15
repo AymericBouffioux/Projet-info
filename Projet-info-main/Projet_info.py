@@ -4,6 +4,7 @@ import customtkinter as ctk
 import fr_modulation
 import fr_th_la
 import animation
+from configurator import *
 
 # Multi fenêtre
 class App(ctk.CTk) :
@@ -12,6 +13,7 @@ class App(ctk.CTk) :
         ctk.CTk.__init__(self, *args, **kwargs)
         self.title("Angry Balls")
         self.resizable(0,0)
+        data_init()
      
 # Création page Main
         fr_main = ctk.CTkFrame(self)
@@ -114,6 +116,7 @@ class App(ctk.CTk) :
         # Accès à animation
         elif nom == "Carte 1":
             animation.AppForCanvas()
+            
             
         print("Le bouton '%s' a été cliqué" % (nom))
 

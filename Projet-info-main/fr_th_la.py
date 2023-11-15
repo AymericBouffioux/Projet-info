@@ -6,7 +6,7 @@ def destroy_window(window):
     window.destroy()
 
 # Fonction pour changer le thème        
-def change_theme(app):
+def change_theme():
     # Créer une fenêtre
     fr_change_theme = ctk.CTk()
     fr_change_theme.title("Changer le thème")
@@ -20,14 +20,10 @@ def change_theme(app):
         selected_theme = theme_var.get()
         # Change le thème en light mode
         if selected_theme == "light":
-            app.configure(bg="white")
-            fr_change_theme.configure(bg="white")
-            change_language.configure(bg="white")
+            ctk.set_appearance_mode("Light")
         # Change le thème en dark mode
         elif selected_theme == "dark":
-            app.configure(bg="black")
-            fr_change_theme.configure(bg="black")
-            fr_change_theme.configure(bg="black")
+            ctk.set_appearance_mode("Dark")
 
             
     # Radiobuttons pour choisir le thème

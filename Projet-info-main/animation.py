@@ -1,6 +1,7 @@
 import tkinter as ctk
 import math
 import time
+from configurator import get_data
 
 class AppForCanvas(ctk.Tk):
     width_max = 900
@@ -94,22 +95,27 @@ class MyCanvas(ctk.Canvas):
             if self.boule:
                 self.delete(self.boule)
 
+            # Calcul trajectoire
             angle_radians = math.atan2(self.catapulte_y - event.y, event.x - self.catapulte_x)
             self.angle = math.degrees(angle_radians) - 180
 
             distance = math.sqrt((event.x - self.catapulte_x) ** 2 + (self.catapulte_y - event.y) ** 2)
             
-            self.vitesse = distance / 10  # ici il faut inclure l'elasticité
-
+            # Calcul vitesse
+            elasticite = get_data("elasticite")
+            self.vitesse = (distance / 10) * elasticite  
+            
             self.boule_x = self.catapulte_x
             self.boule_y = self.catapulte_y - 50
             self.boule = self.create_boule(self.boule_x, self.boule_y)
-            # la faut que je mette la vitesse de rechargement
+            
+            # Intro couleur
+            # couleur = get_data("couleur")
 
         self.bouger_boule()
 
     def bouger_boule(self):
-        rayon = 10  # Rayon de la boule # ici faut inclure la taille
+        rayon = get_data("taille")*2  # Rayon de la boule # ici faut inclure la taille
         temps_interval = 0.05  # Intervalle de temps entre chaque déplacement
         temps_total = 0
         coefficient_restitution = 0.8  # Coefficient de restitution pour simuler le rebond
@@ -138,7 +144,7 @@ class MyCanvas(ctk.Canvas):
                     ennemi_bbox = self.bbox(ennemi[0])
                     if ennemi_bbox and boule_bbox[2] >= ennemi_bbox[0] and boule_bbox[0] <= ennemi_bbox[2] and \
                             boule_bbox[3] >= ennemi_bbox[1] and boule_bbox[1] <= ennemi_bbox[3]:
-                        ennemi[7] -= 1 # inclure le poids
+                        ennemi[7] -= get_data("poids")*0.1 # inclure le poids
 
                         if ennemi[7] <= 0:
                             self.delete(ennemi[0])
@@ -215,7 +221,6 @@ class FelicitationsWindow(ctk.Toplevel):
 
     def fermer_fenetre(self):
         self.destroy()
-
 
 if __name__ == "__main__":
     root = AppForCanvas()

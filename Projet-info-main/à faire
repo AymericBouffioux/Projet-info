@@ -1,0 +1,7 @@
+fr_th_la : créer le changement de langue
+fr_modulation : changer vitesse recharge par couleur et le mettre dans modif boule
+fr_winner et fr_loser : refaire l'interface et ajouter bouton retour fr_start
+animation : ajouter changement couleur boule
+            maps 2 et 3 
+            lien avec fr_winner et fr_loser
+            corriger timer
