@@ -3,6 +3,7 @@ from tkinter import BOTH
 import customtkinter as ctk
 import fr_modulation
 import fr_th_la
+import animation
 
 # Multi fenêtre
 class App(ctk.CTk) :
@@ -110,6 +111,9 @@ class App(ctk.CTk) :
             fr_th_la.change_theme()
         elif nom == "Langues":
             fr_th_la.change_language()
+        # Accès à animation
+        elif nom == "Carte 1":
+            animation.AppForCanvas()
             
         print("Le bouton '%s' a été cliqué" % (nom))
 
