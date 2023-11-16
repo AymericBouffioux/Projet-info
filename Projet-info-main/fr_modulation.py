@@ -56,7 +56,7 @@ def create_cata():
     
     # bouton save
     btn_Save = ctk.CTkButton(fr_modul_cata, text="sauver",
-                                 command=lambda: (save_elasticite(elasticite_value), save_vitesse_charge(vitesse_char_value)))
+                                 command=lambda: (save_elasticite(elasticite_value)))#, save_vitesse_charge(vitesse_char_value)
     btn_Save.grid(row=1, column=0)
     
     # bouton retour
