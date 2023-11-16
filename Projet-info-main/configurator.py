@@ -4,7 +4,7 @@ FILE = "config.pkl"
 
 def data_init():
     data = {"elasticite":1,
-            "couleur":"rouge",
+            "couleur":0,
             "taille":5,
             "poids":1}
 

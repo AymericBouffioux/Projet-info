@@ -60,7 +60,6 @@ class App(ctk.CTk) :
         
 # Création page Help
         fr_help = ctk.CTkFrame(self)
-        
         btn_HM = ctk.CTkButton(fr_help, text="Retour page d'acceuil",
                                  command=lambda: self.show_frame(fr_help, fr_main))
         btn_HM.grid(row=0, column=0)
@@ -88,9 +87,13 @@ class App(ctk.CTk) :
         text_label.grid(row=1, column=0, padx=20, pady=20, sticky="ew")
         
         # Widget de texte pour afficher le bouton thème
+
         text_bouton_th = ctk.CTkButton(fr_options, text="Thème",
                                        command=lambda: self.bouton_clic("Thème"))
         text_bouton_th.grid(row=2, column=0, padx=20, pady=20, sticky="ew")
+
+
+
         # Widget de texte pour afficher le boutopn langues
         text_bouton_th = ctk.CTkButton(fr_options, text="Langues",
                                        command=lambda: self.bouton_clic("Langues"))
@@ -115,8 +118,17 @@ class App(ctk.CTk) :
             fr_th_la.change_language()
         # Accès à animation
         elif nom == "Carte 1":
-            animation.AppForCanvas()
             
+            screen1 = animation.AppForCanvas('carte 1')
+            screen1.mainloop()
+            #animation.AppForCanvas().mainloop()
+        elif nom == "Carte 2":
+            screen2 = animation.AppForCanvas('carte 2')
+            screen2.mainloop()
+
+        elif nom == "Carte 3":
+            screen3 = animation.AppForCanvas('carte 3')
+            screen3.mainloop()
             
         print("Le bouton '%s' a été cliqué" % (nom))
 
@@ -124,4 +136,3 @@ class App(ctk.CTk) :
 # Fermeture app   
 app = App()
 app.mainloop() 
-

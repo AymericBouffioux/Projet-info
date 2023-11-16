@@ -4,6 +4,7 @@ from tokenize import Double
 import customtkinter as ctk
 from configurator import update   
 
+
 def destroy_window(window):
     window.destroy()
 
@@ -21,10 +22,10 @@ def create_cata():
         print(f"Elasticite sauvée : {elasticite_value.get()}")
         update("elasticite",elasticite_value.get())
     # Fonction pour sauvegarder la vitesse de chargement
-    def save_vitesse_charge(vitesse_char_value):
+    '''def save_vitesse_charge(vitesse_char_value):
         print(f"Vitesse de charge sauvée : {vitesse_char_value.get()}")
-        update("vitesse de chargement",vitesse_char_value.get())
-
+        update("vitesse de chargement",vitesse_char_value.get())'''
+    
     # Widget de texte pour afficher le titre
     text_label = ctk.CTkLabel(fr_modul_cata, text="modulation catapulte ",fg_color=("#ADD8E6", 'blue'))
     text_label.grid(row=2, column=0, padx=20, pady=20, sticky="ew")
@@ -40,18 +41,18 @@ def create_cata():
     # slider pr determiner l'elasticité
     slider_elasticité = ctk.CTkSlider(fr_modul_cata, from_=1, to=5, command=slider_event)
     slider_elasticité.grid(row=4, column=0, padx=20, pady=20, sticky="ew")
-
+    """
     # Widget de texte pour afficher le titre
     text_label1 = ctk.CTkLabel(fr_modul_cata, text="vitesse de chargement",fg_color=("#ADD8E6", 'blue'))
     text_label1.grid(row=6, column=0, padx=20, pady=20, sticky="ew")
-
+    
     # slider pr determiner la vitesse de chargement
     def slider_event(value):
         vitesse_char_value.set(value)
         print(value)
     # slider pr determiner la vitesse de chargement
     slider_vitesse_de_chargement= ctk.CTkSlider(fr_modul_cata, from_=1, to=5, command=slider_event)
-    slider_vitesse_de_chargement.grid(row=7, column=0, padx=20, pady=20, sticky="ew")
+    slider_vitesse_de_chargement.grid(row=7, column=0, padx=20, pady=20, sticky="ew")"""
     
     # bouton save
     btn_Save = ctk.CTkButton(fr_modul_cata, text="sauver",
@@ -76,6 +77,7 @@ def create_boules():
 
     poids_value = DoubleVar(value=2.5) 
     taille_value = DoubleVar(value=2.5)
+    couleur_value = DoubleVar(value=None)
 
     # Fonction pour sauvegarder le poids
     def save_poids(poids_value):
@@ -85,6 +87,10 @@ def create_boules():
     def save_taille(taille_value):
         print(f"Taille sauvée : {taille_value.get()}")
         update("taille",taille_value.get())
+    
+    def save_couleur(couleur_value):
+        #print(f"Couleur sauvée : {couleur_value.get()}")
+        update("couleur",couleur_value.get())
 
 
     # Widget de texte pour afficher le titre
@@ -117,14 +123,42 @@ def create_boules():
     slider_taille= ctk.CTkSlider(fr_modul_boules, from_=2.5, to=7.5, command=slider_event)
     slider_taille.grid(row=7, column=0, padx=20, pady=20, sticky="ew")
     
-    # bouton save
-    btn_Save = ctk.CTkButton(fr_modul_boules, text="sauver",
-                                 command=lambda: (save_poids(poids_value), save_taille(taille_value)))
-    btn_Save.grid(row=1, column=0)
     
-    # bouton retour
+    def update_color(selected_color):
+        #global couleur_value
+        if selected_color == "Rouge":
+            couleur = 0
+            
+        elif selected_color == "bleu":
+            couleur = 1
+
+        elif selected_color == "rose":
+            couleur = 2
+
+
+        couleur_value.set(couleur)
+
+   
+
+    # Widget de texte pour afficher le titre
+    text_label2 = ctk.CTkLabel(fr_modul_boules, text="couleur", fg_color=("#ADD8E6", 'blue'))
+    text_label2.grid(row=8, column=0, padx=20, pady=20, sticky="ew")
+
+    language_optionmenu = ctk.CTkOptionMenu(fr_modul_boules, values=["Rouge", "bleu", "rose"],
+                                            command=update_color)
+    # Bouton pour ouvrir le sélecteur de couleur
+    
+    language_optionmenu.grid(row=9, column=0, padx=20, pady=20, sticky="ew")   
+
+     # bouton retour
     btn_SM = ctk.CTkButton(fr_modul_boules, text="Retour à la page Start", command=lambda: destroy_window(fr_modul_boules))
     btn_SM.grid(row=0, column=0)
 
-    fr_modul_boules.mainloop()
+
+    # bouton save
+    btn_Save = ctk.CTkButton(fr_modul_boules, text="sauver",
+                                 command=lambda: (save_poids(poids_value), save_taille(taille_value),save_couleur(couleur_value)))
+    btn_Save.grid(row=1, column=0)
     
+    
+    fr_modul_boules.mainloop()
