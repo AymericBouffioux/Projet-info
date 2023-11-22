@@ -71,6 +71,8 @@ class AppForCanvas(ctk.CTk):
             x, y = position
             ennemi = self.can.create_ennemi(x, y)
             self.ennemis.append(ennemi)
+            
+            
     def check_time_limit(self):
         if self.temps_debut is not None:
             temps_ecoule = int(time.time() - self.temps_debut)
@@ -179,8 +181,12 @@ class MyCanvas(ctk.CTkCanvas):
                 ennemi_bbox = self.bbox(ennemi[0])
                 if ennemi_bbox and boule_bbox[2] >= ennemi_bbox[0] and boule_bbox[0] <= ennemi_bbox[2] and \
                         boule_bbox[3] >= ennemi_bbox[1] and boule_bbox[1] <= ennemi_bbox[3]:
-                    # ici on inclus le poids
+                    # ici la vie de l'ennemi diminue en fct du poids selectioné
                     ennemi[7] -= get_data("poids")*0.1
+                    
+                    print(self.bbox(ennemi[6]))
+                    x0, y0, x1, y1 = self.bbox(ennemi[6])
+                    self.coords(ennemi[6], x0, y0, (x1 -(40*ennemi[7])) , y1)
 
                     if ennemi[7] <= 0:
                         self.delete(ennemi[0])
@@ -225,6 +231,7 @@ class MyCanvas(ctk.CTkCanvas):
         vie_rectangle = self.create_rectangle(x - 20, y - 50, x + 20, y - 45, fill='red')
         vie_ennemi = 1.0
         return [ennemi, tete,  bras_gauche, bras_droit, jambe_gauche, jambe_droite, vie_rectangle, vie_ennemi]
+    
 
     def create_boule(self, x, y):
         couleur = get_data("couleur")

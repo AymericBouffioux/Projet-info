@@ -42,7 +42,6 @@ class App(ctk.CTk) :
         bouton_map2.grid(row=3, column=2, padx=20, pady=(0, 20), sticky="w")
         bouton_map3.grid(row=3, column=4, padx=20, pady=(0, 20), sticky="w")
 
-
         # Créer le bouton "Modulation des Boules" en haut à gauche
         bouton_boules = ctk.CTkButton(fr_start, text="Modulation des Boules", 
                                       command=lambda: self.bouton_clic("Modulation des Boules"))
@@ -67,11 +66,11 @@ class App(ctk.CTk) :
         lbl_title_help = ctk.CTkLabel(fr_help, text="Règles" , justify="center", font=("Arial",60))
         lbl_title_help.grid(row=1, column=0, padx=20, pady=20, sticky="ew")
         texte_regles_label = ctk.CTkLabel(fr_help,height=200, width=100, text="""
-            Règle 1 : ne jamais jahsuh.
-            Règle 2 : un zdazd.
-            Règle 3 : Ut enim ad minim veniadzas.
-            Règle 4 : Duis aute irure dolor in reprehenderit in voluptate velit.
-            Règle 5 : Excepteur side.
+            Règle 1 : Objectif principal : Éliminer tous les ennemis en lançant habilement des boules sur les structures les abritant.
+            Règle 2 : Choix stratégique : Sélectionner judicieusement le poids et la taille des boules pour optimiser la réussite du niveau.
+            Règle 3 : Précision catapultée : Utiliser la catapulte avec précision pour cibler et atteindre les ennemis.
+            Règle 4 : Chronométrage optimal : Terminer le niveau en 7 secondes pour obtenir 3 étoiles, en 12 secondes pour 2 étoiles.
+            Règle 5 : Réactivité requise : Assurer un mouvement constant dans les 15 secondes, sinon la partie se termine.
             """ , justify="left", font=("Arial",15))
         texte_regles_label.grid(row=2, column=0, padx=20, pady=20, sticky="ew")
         
@@ -132,7 +131,7 @@ class App(ctk.CTk) :
             
         print("Le bouton '%s' a été cliqué" % (nom))
 
-            
+     
 # Fermeture app   
 app = App()
 app.mainloop() 
