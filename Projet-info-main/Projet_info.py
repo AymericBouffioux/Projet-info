@@ -15,7 +15,7 @@ class App(ctk.CTk) :
         self.resizable(0,0)
         data_init()
      
-# Création page Main
+        # Création page Main
         fr_main = ctk.CTkFrame(self)
         
 
@@ -30,7 +30,7 @@ class App(ctk.CTk) :
         btn_options.grid(row=3, column=3)
         fr_main.pack(fill=BOTH, expand=True)
 
-# Création page Start
+        # Création page Start
         fr_start = ctk.CTkFrame(self)
         cadre_boutons_map = ctk.CTkFrame(fr_start, fg_color="#ADD8E6")
         cadre_boutons_map.grid(row=3, column=0, padx=20, pady=(0, 20), sticky="ew", columnspan=5)
@@ -57,7 +57,7 @@ class App(ctk.CTk) :
                                  command=lambda: self.show_frame(fr_start, fr_main))
         btn_SM.grid(row=0, column=0)
         
-# Création page Help
+        # Création page Help
         fr_help = ctk.CTkFrame(self)
         btn_HM = ctk.CTkButton(fr_help, text="Retour page d'acceuil",
                                  command=lambda: self.show_frame(fr_help, fr_main))
@@ -74,7 +74,7 @@ class App(ctk.CTk) :
             """ , justify="left", font=("Arial",15))
         texte_regles_label.grid(row=2, column=0, padx=20, pady=20, sticky="ew")
         
-# Création page Options
+        # Création page Options
         fr_options = ctk.CTkFrame(self)
         
         btn_OM = ctk.CTkButton(fr_options, text="Retour page d'acceuil",

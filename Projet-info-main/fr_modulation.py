@@ -10,21 +10,17 @@ def destroy_window(window):
 
 # Fonction pour modifier la catapulte
 def create_cata():
-# Créer une fenêtre
+    # Créer une fenêtre
     fr_modul_cata = ctk.CTk()
     fr_modul_cata.title(" modulation catapulte")
     
     elasticite_value = DoubleVar(value=2.5) 
-    vitesse_char_value = DoubleVar(value=2.5)
+    
 
     # Fonction pour sauvegarder l'élasticité
     def save_elasticite(elasticite_value):
         print(f"Elasticite sauvée : {elasticite_value.get()}")
         update("elasticite",elasticite_value.get())
-    # Fonction pour sauvegarder la vitesse de chargement
-    '''def save_vitesse_charge(vitesse_char_value):
-        print(f"Vitesse de charge sauvée : {vitesse_char_value.get()}")
-        update("vitesse de chargement",vitesse_char_value.get())'''
     
     # Widget de texte pour afficher le titre
     text_label = ctk.CTkLabel(fr_modul_cata, text="modulation catapulte ",fg_color=("#ADD8E6", 'blue'))
@@ -41,18 +37,7 @@ def create_cata():
     # slider pr determiner l'elasticité
     slider_elasticité = ctk.CTkSlider(fr_modul_cata, from_=1, to=5, command=slider_event)
     slider_elasticité.grid(row=4, column=0, padx=20, pady=20, sticky="ew")
-    """
-    # Widget de texte pour afficher le titre
-    text_label1 = ctk.CTkLabel(fr_modul_cata, text="vitesse de chargement",fg_color=("#ADD8E6", 'blue'))
-    text_label1.grid(row=6, column=0, padx=20, pady=20, sticky="ew")
     
-    # slider pr determiner la vitesse de chargement
-    def slider_event(value):
-        vitesse_char_value.set(value)
-        print(value)
-    # slider pr determiner la vitesse de chargement
-    slider_vitesse_de_chargement= ctk.CTkSlider(fr_modul_cata, from_=1, to=5, command=slider_event)
-    slider_vitesse_de_chargement.grid(row=7, column=0, padx=20, pady=20, sticky="ew")"""
     
     # bouton save
     btn_Save = ctk.CTkButton(fr_modul_cata, text="sauver",
@@ -77,7 +62,7 @@ def create_boules():
 
     poids_value = DoubleVar(value=2.5) 
     taille_value = DoubleVar(value=2.5)
-    couleur_value = DoubleVar(value=None)
+    couleur_value = DoubleVar(value=0)
 
     # Fonction pour sauvegarder le poids
     def save_poids(poids_value):
@@ -129,10 +114,10 @@ def create_boules():
         if selected_color == "Rouge":
             couleur = 0
             
-        elif selected_color == "bleu":
+        elif selected_color == "Bleu":
             couleur = 1
 
-        elif selected_color == "rose":
+        elif selected_color == "Rose":
             couleur = 2
 
 
@@ -144,7 +129,7 @@ def create_boules():
     text_label2 = ctk.CTkLabel(fr_modul_boules, text="couleur", fg_color=("#ADD8E6", 'blue'))
     text_label2.grid(row=8, column=0, padx=20, pady=20, sticky="ew")
 
-    language_optionmenu = ctk.CTkOptionMenu(fr_modul_boules, values=["Rouge", "bleu", "rose"],
+    language_optionmenu = ctk.CTkOptionMenu(fr_modul_boules, values=["Rouge", "Bleu", "Rose"],
                                             command=update_color)
     # Bouton pour ouvrir le sélecteur de couleur
     

@@ -156,6 +156,7 @@ class MyCanvas(ctk.CTkCanvas):
         self.bouger_boule()
 
     def bouger_boule(self):
+        
         rayon = get_data("taille") * 2  # Rayon de la boule
         temps_interval = 50  # Intervalle de temps entre chaque déplacement (en millisecondes)
         temps_total = 0
