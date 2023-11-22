@@ -134,4 +134,4 @@ class App(ctk.CTk) :
      
 # Fermeture app   
 app = App()
-app.mainloop() 
+app.mainloop()

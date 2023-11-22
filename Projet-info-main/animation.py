@@ -183,10 +183,15 @@ class MyCanvas(ctk.CTkCanvas):
                         boule_bbox[3] >= ennemi_bbox[1] and boule_bbox[1] <= ennemi_bbox[3]:
                     # ici la vie de l'ennemi diminue en fct du poids selectioné
                     ennemi[7] -= get_data("poids")*0.1
+                    #mise à jour de la barre des vies
+                    vie_en_moins = 1 - ennemi[7] 
                     
+
                     print(self.bbox(ennemi[6]))
                     x0, y0, x1, y1 = self.bbox(ennemi[6])
-                    self.coords(ennemi[6], x0, y0, (x1 -(40*ennemi[7])) , y1)
+                    vie_totale = x1 - x0
+                    nv_vie = vie_totale * ennemi[7]
+                    self.coords(ennemi[6], x0, y0, (x0 + nv_vie) , y1)
 
                     if ennemi[7] <= 0:
                         self.delete(ennemi[0])

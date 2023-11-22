@@ -5,8 +5,7 @@ def afficher_win():
     fenetre_winner = ctk.CTk()
     fenetre_winner.resizable(0,0)
 
-    canvas2= ctk.CTkCanvas(fenetre_winner, width=100, height=100)
-    canvas2.grid(row = 0, column = 0, padx=10, pady=10, sticky="nsew")
+    
     # Écrir Winner
     text1 = ctk.CTkLabel(fenetre_winner, text="Winner" , justify="center", font=("Arial",60))
     text1.grid(row = 0, column = 2)
