@@ -1,12 +1,20 @@
 from tkinter.tix import COLUMN
 import customtkinter as ctk
-from PIL import Image, ImageTk
 import tkinter as tk
+import animation
+from configurator import get_data
+
+
 
         
 
-def restart_game(fenetre_gameover):
-    fenetre_gameover.destroy()
+def rejouer_niveau(fenetre):
+
+    map_a_rejouer = get_data("map_actuelle")
+    screen = animation.AppForCanvas("carte " + str(map_a_rejouer))
+    fenetre.withdraw()
+    screen.mainloop()
+
 
 def dessiner_tete_de_mort(canvas):
     # Dessiner le crâne
@@ -22,6 +30,18 @@ def dessiner_tete_de_mort(canvas):
     # Dessiner la bouche (une ligne courbe)
     canvas.create_line(80, 130, 140, 130, width=2, smooth=True)
 
+def retour_fr_start(fenetre):
+    fenetre.withdraw()
+    from Projet_info import App
+    
+    screen = App()
+    screen.show_fr_start()
+    screen.mainloop()
+
+
+
+
+    
 def afficher_loser():
     # Créez la fenêtre principale
     fenetre_gameover = ctk.CTk()
@@ -35,8 +55,13 @@ def afficher_loser():
     ctk.CTkLabel(fenetre_gameover, text="GAME OVER", justify="center", font=("Arial", 60)).grid(row=0, column=2)
 
     # Bouton "REJOUER"
-    bouton_restart = ctk.CTkButton(fenetre_gameover, text="REJOUER", height=25, width=50, command=lambda: restart_game(fenetre_gameover))
+    bouton_restart = ctk.CTkButton(fenetre_gameover, text="REJOUER", height=25, width=50, command=lambda: rejouer_niveau(fenetre_gameover))
     bouton_restart.grid(row=2, column=2)
+
+    # Bouton "Retour"
+    bouton_retour_start = ctk.CTkButton(fenetre_gameover, text="home", height=25, width=50, command=lambda: retour_fr_start(fenetre_gameover))
+    bouton_retour_start.grid(row=3, column=2)
+
 
     # Appeler la fonction pour dessiner la tête de mort
     dessiner_tete_de_mort(canvas_tete)

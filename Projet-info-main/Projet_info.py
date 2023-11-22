@@ -17,8 +17,6 @@ class App(ctk.CTk) :
      
         # Création page Main
         fr_main = ctk.CTkFrame(self)
-        
-
         btn_start = ctk.CTkButton(fr_main, text="Start",height=50, width=100,
                                   command=lambda: self.show_frame(fr_main, fr_start))
         btn_start.grid(row=2, column=2)
@@ -34,10 +32,14 @@ class App(ctk.CTk) :
         fr_start = ctk.CTkFrame(self)
         cadre_boutons_map = ctk.CTkFrame(fr_start, fg_color="#ADD8E6")
         cadre_boutons_map.grid(row=3, column=0, padx=20, pady=(0, 20), sticky="ew", columnspan=5)
+
+        
+        
+
         # Créer les boutons "Map1", "Map2" et "Map3" centrés horizontalement dans le rectangle rose
-        bouton_map1 = ctk.CTkButton(fr_start, text="Carte 1", command=lambda: self.bouton_clic("Carte 1"))
-        bouton_map2 = ctk.CTkButton(fr_start, text="Carte 2", command=lambda: self.bouton_clic("Carte 2"))
-        bouton_map3 = ctk.CTkButton(fr_start, text="Carte 3", command=lambda: self.bouton_clic("Carte 3"))
+        bouton_map1 = ctk.CTkButton(fr_start, text="Carte 1", command=lambda: self.bouton_clic('Carte 1'))
+        bouton_map2 = ctk.CTkButton(fr_start, text="Carte 2", command=lambda: self.bouton_clic('Carte 2'))
+        bouton_map3 = ctk.CTkButton(fr_start, text="Carte 3", command=lambda: self.bouton_clic('Carte 3'))
         bouton_map1.grid(row=3, column=0, padx=20, pady=(0, 20), sticky="w")
         bouton_map2.grid(row=3, column=2, padx=20, pady=(0, 20), sticky="w")
         bouton_map3.grid(row=3, column=4, padx=20, pady=(0, 20), sticky="w")
@@ -98,13 +100,23 @@ class App(ctk.CTk) :
                                        command=lambda: self.bouton_clic("Langues"))
         text_bouton_th.grid(row=3, column=0, padx=20, pady=20, sticky="ew")
 
-# Création showframe
+    #c'est pr pouvoir afficher fr_start
+    def show_fr_start(self):
+        # Assurez-vous que fr_start est bien configuré avant de l'afficher
+        self.fr_start.pack(fill=BOTH, expand=True)
+
+    # Création showframe
     def show_frame(self, frame_forget, frame_display):
         frame_forget.pack_forget()
         frame_display.pack(fill=BOTH, expand=True)
+
+    def hide_frame(self):
+        self.withdraw()
+
         
 # Utilisation de fonctions dans d'autres documents 
     def bouton_clic(self, nom):
+        
         # Accès à fr_modulation
         if nom == "Modulation des Catapultes":
             fr_modulation.create_cata()        
@@ -117,19 +129,27 @@ class App(ctk.CTk) :
             fr_th_la.change_language()
         # Accès à animation
         elif nom == "Carte 1":
-            
+           
             screen1 = animation.AppForCanvas('carte 1')
+            
+            self.hide_frame()
             screen1.mainloop()
+
             #animation.AppForCanvas().mainloop()
         elif nom == "Carte 2":
+         
             screen2 = animation.AppForCanvas('carte 2')
+            self.hide_frame()
             screen2.mainloop()
 
         elif nom == "Carte 3":
+            
             screen3 = animation.AppForCanvas('carte 3')
+            self.hide_frame()
             screen3.mainloop()
             
         print("Le bouton '%s' a été cliqué" % (nom))
+        
 
      
 # Fermeture app   

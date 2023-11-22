@@ -6,6 +6,7 @@ def data_init():
     data = {"elasticite":1,
             "couleur":0,
             "taille":5,
+            "map_actuelle":1,
             "poids":1}
 
     with open(FILE,"wb") as f:

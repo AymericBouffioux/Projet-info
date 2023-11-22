@@ -2,7 +2,7 @@ from tkinter import *
 import customtkinter as ctk
 import math
 import time
-from configurator import get_data
+from configurator import *
 import fr_winner
 import fr_loser
 class AppForCanvas(ctk.CTk):
@@ -13,7 +13,7 @@ class AppForCanvas(ctk.CTk):
     ennemi2 = (500, 550)
     ennemi3 = (550, 550)
 
-    def __init__(self, map, *args, **kwargs):
+    def __init__(self, map,  *args, **kwargs):
         ctk.CTk.__init__(self, *args, **kwargs)
         self.title("Catapulte")
         self.fr = ctk.CTkFrame(self)
@@ -53,12 +53,16 @@ class AppForCanvas(ctk.CTk):
         # on vérifie pas la map 1 
         if self.map == 'carte 1':
             AppForCanvas.ennemi1, AppForCanvas.ennemi2, AppForCanvas.ennemi3 = (550, 550) , (500, 550), (400, 550)
+            update("map_actuelle", 1)
 
         elif self.map == 'carte 2':
             AppForCanvas.ennemi1, AppForCanvas.ennemi2, AppForCanvas.ennemi3 = (550, 300) , (500, 350), (400, 250)
+            update("map_actuelle", 2)
 
         else :
             AppForCanvas.ennemi1, AppForCanvas.ennemi2, AppForCanvas.ennemi3 =(550, 50) , (500, 50), (400, 50)
+            update("map_actuelle", 3)
+
 
 
 
@@ -78,7 +82,9 @@ class AppForCanvas(ctk.CTk):
             temps_ecoule = int(time.time() - self.temps_debut)
             if temps_ecoule > 15:  # Check if the time limit (5 seconds) is exceeded
                 self.arreter_timer()  # Stop the timer
-                fr_loser.afficher_loser()  # Show the lose window
+                self.withdraw() 
+
+                fr_loser.afficher_loser() # Show the lose window
                 
     
     def mise_a_jour_temps(self):
@@ -99,11 +105,20 @@ class AppForCanvas(ctk.CTk):
         # Arrêter le timer s'il est en cours
         if self.temps_after_id is not None:
             self.after_cancel(self.temps_after_id)
+    
+    def afficher_win(self):
+        self.withdraw()  # Masquer la fenêtre principale
+        fr_winner.afficher_win()
+
+    def afficher_loser(self):
+        self.withdraw()  # Masquer la fenêtre principale
+        fr_loser.afficher_loser(self)
 
 class MyCanvas(ctk.CTkCanvas):
     def __init__(self, root, *args, **kwargs):
         ctk.CTkCanvas.__init__(self, *args, **kwargs)
         self.root = root
+        
         self.catapulte_x, self.catapulte_y = 50, 350
         self.catapulte_tension = 0
         self.boule_x, self.boule_y = self.catapulte_x, self.catapulte_y
@@ -213,11 +228,16 @@ class MyCanvas(ctk.CTkCanvas):
                 self.root.ennemis.remove(ennemi)
 
         if self.root.score >= self.root.ennemis_a_tuer:
+            
             # Le niveau est terminé
             self.root.niveau += 1
             self.root.score_label.configure(text=f"Passer au niveau {self.root.niveau}")
             self.root.temps_label.configure(text="Niveau terminé! Cliquez sur 'Niveau Suivant'.")
-            fr_winner.afficher_win()
+            self.root.afficher_win()
+        
+
+            
+            
         else:
             # Planifier l'appel récursif avec after
             self.after(temps_interval, self.bouger_boule)
@@ -253,5 +273,5 @@ class MyCanvas(ctk.CTkCanvas):
         return boule
 
 if __name__ == "__main__":
-    root = AppForCanvas()
+    root = AppForCanvas("carte 1")
     root.mainloop()
