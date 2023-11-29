@@ -13,8 +13,6 @@ def data_init():
         dump(data,f)
 
 def update(prop, val):
-    # if not(os.isfile(FILE)):
-    #     data_init()
     with open(FILE,"rb") as f:
         data = load(f)
         data[prop]=val
