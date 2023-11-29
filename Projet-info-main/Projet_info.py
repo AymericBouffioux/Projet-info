@@ -2,7 +2,6 @@
 from tkinter import BOTH, DoubleVar
 from tokenize import Double
 import customtkinter as ctk
-import fr_modulation
 import animation
 from configurator import *
 
@@ -139,17 +138,13 @@ class App(ctk.CTk) :
         lbl_change_language.grid(row=0, column=0, padx=20, pady=20, sticky="ew")
         
         self.elasticite_value = DoubleVar(value=2.5) 
-        
-        # Widget de texte pour afficher le titre
-        text_label = ctk.CTkLabel(fr_modul_cata, text="modulation catapulte ",fg_color=("#ADD8E6", 'blue'))
-        text_label.grid(row=2, column=0, padx=20, pady=20, sticky="ew")
 
         # Widget de texte pour afficher le titre
-        text_label = ctk.CTkLabel(fr_modul_cata, text="elasticite ",fg_color=("#ADD8E6", 'blue'))
+        text_label = ctk.CTkLabel(fr_modul_cata, text="élasticite ",fg_color=("#ADD8E6", 'blue'))
         text_label.grid(row=3, column=0, padx=20, pady=20, sticky="ew")
         
         # slider pr determiner l'elasticité
-        slider_elasticité = ctk.CTkSlider(fr_modul_cata, from_=1, to=5, command=self.slider_event)
+        slider_elasticité = ctk.CTkSlider(fr_modul_cata, from_=1, to=5, command=self.slider_event_elasticite)
         slider_elasticité.grid(row=4, column=0, padx=20, pady=20, sticky="ew")
     
     
@@ -175,16 +170,16 @@ class App(ctk.CTk) :
         text_label = ctk.CTkLabel( fr_modul_boules, text="poids",fg_color=("#ADD8E6", 'blue'))
         text_label.grid(row=3, column=0, padx=20, pady=20, sticky="ew")
     
-        # slider pr determiner l'elasticité
-        slider_poids = ctk.CTkSlider(fr_modul_boules, from_=1, to=5, command=self.slider_event)
+        # slider pr determiner la taille
+        slider_poids = ctk.CTkSlider(fr_modul_boules, from_=1, to=5, command=self.slider_event_taille)
         slider_poids.grid(row=4, column=0, padx=20, pady=20, sticky="ew")
         
         # Widget de texte pour afficher le titre
         text_label1 = ctk.CTkLabel(fr_modul_boules, text="taille",fg_color=("#ADD8E6", 'blue'))
         text_label1.grid(row=6, column=0, padx=20, pady=20, sticky="ew")
 
-        # slider pr determiner la vitesse de chargement
-        slider_taille= ctk.CTkSlider(fr_modul_boules, from_=2.5, to=7.5, command=self.slider_event)
+        # slider pr determiner le poids
+        slider_taille= ctk.CTkSlider(fr_modul_boules, from_=2.5, to=7.5, command=self.slider_event_poids)
         slider_taille.grid(row=7, column=0, padx=20, pady=20, sticky="ew")
         
         # Widget de texte pour afficher le titre
@@ -276,12 +271,20 @@ class App(ctk.CTk) :
             self.update_english_language()
         
     # slider pr determiner l'elasticité
-    def slider_event(self, value):
+    def slider_event_elasticite(self, value):
         self.elasticite_value.set(value)
         print(value)
-        
+    # slider pr determiner la taille
+    def slider_event_taille(self, value):
+        self.taille_value.set(value)
+        print(value)
+    # slider pr determiner le poids
+    def slider_event_poids(self, value):
+        self.poids_value.set(value)
+        print(value)
+    
+    # Update color   
     def update_color(self, selected_color):
-        #global couleur_value
         if selected_color == "Rouge":
             couleur = 0
             
@@ -306,7 +309,7 @@ class App(ctk.CTk) :
     def save_taille(self, taille_value):
         print(f"Taille sauvée : {taille_value.get()}")
         update("taille",taille_value.get())
-    # Fonction pour sauvegarder la vitesse   
+    # Fonction pour sauvegarder la couleur   
     def save_couleur(self, couleur_value):
         print(f"Couleur sauvée : {couleur_value.get()}")
         update("couleur",couleur_value.get())

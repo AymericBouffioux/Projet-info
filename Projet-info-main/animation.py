@@ -80,12 +80,12 @@ class AppForCanvas(ctk.CTk):
     def check_time_limit(self):
         if self.temps_debut is not None:
             temps_ecoule = int(time.time() - self.temps_debut)
-            if temps_ecoule > 15:  # Check if the time limit (5 seconds) is exceeded
+            if temps_ecoule >= 15:  # Check if the time limit (5 seconds) is exceeded
                 self.arreter_timer()  # Stop the timer
-                self.withdraw() 
-
+                self.withdraw()
+                self.can.unbind("<Motion>") 
                 fr_loser.afficher_loser() # Show the lose window
-                
+       
     
     def mise_a_jour_temps(self):
         if self.temps_debut is not None:
@@ -99,7 +99,7 @@ class AppForCanvas(ctk.CTk):
                 self.check_time_limit()
             elif self.temps_fin_niveau is None:
                 # Niveau terminé, enregistrer le temps de fin
-                self.temps_fin_niveau = time.time() 
+                self.temps_fin_niveau = time.time() -self.temps_debut
 
     def arreter_timer(self):
         # Arrêter le timer s'il est en cours
@@ -109,11 +109,11 @@ class AppForCanvas(ctk.CTk):
     def afficher_win(self):
         self.withdraw()  # Masquer la fenêtre principale
         fr_winner.afficher_win()
-
+"""
     def afficher_loser(self):
         self.withdraw()  # Masquer la fenêtre principale
         fr_loser.afficher_loser(self)
-
+"""
 class MyCanvas(ctk.CTkCanvas):
     def __init__(self, root, *args, **kwargs):
         ctk.CTkCanvas.__init__(self, *args, **kwargs)
@@ -134,6 +134,7 @@ class MyCanvas(ctk.CTkCanvas):
                                              self.catapulte_x, self.catapulte_y - 50,
                                              fill='brown')
         self.boule = None
+        self.flag_action = 0   # Set à 0 de base, il faut le passer à 1 quand on lance le jeu (début du timer), et le remettre à 0 quand on fini (timer = 15s ou score = ennemis à tuer)
 
         self.bind("<Button-1>", self.tendre_catapulte)
         self.bind("<ButtonRelease-1>", self.tirer_boule)
@@ -199,11 +200,8 @@ class MyCanvas(ctk.CTkCanvas):
                         boule_bbox[3] >= ennemi_bbox[1] and boule_bbox[1] <= ennemi_bbox[3]:
                     # ici la vie de l'ennemi diminue en fct du poids selectioné
                     ennemi[7] -= get_data("poids")*0.1
-                    #mise à jour de la barre des vies
-                    vie_en_moins = 1 - ennemi[7] 
-                    
+                    #mise à jour de la barre des vies                    
 
-                    print(self.bbox(ennemi[6]))
                     x0, y0, x1, y1 = self.bbox(ennemi[6])
                     vie_totale = x1 - x0
                     nv_vie = vie_totale * ennemi[7]
@@ -227,6 +225,16 @@ class MyCanvas(ctk.CTkCanvas):
             for ennemi in ennemis_a_supprimer:
                 self.root.ennemis.remove(ennemi)
 
+        self.temps_debut = time.time()  # Démarre le chronomètre lorsque les ennemis sont générés
+        if self.temps_debut is not None:
+            temps_ecoule = int(time.time() - self.temps_debut)
+            
+        if self.root.score < self.root.ennemis_a_tuer and temps_ecoule < 15 and self.flag_action:
+            # Planifier l'appel récursif avec after
+            self.after(temps_interval, self.bouger_boule)
+        
+
+    
         if self.root.score >= self.root.ennemis_a_tuer:
             
             # Le niveau est terminé
@@ -234,13 +242,7 @@ class MyCanvas(ctk.CTkCanvas):
             self.root.score_label.configure(text=f"Passer au niveau {self.root.niveau}")
             self.root.temps_label.configure(text="Niveau terminé! Cliquez sur 'Niveau Suivant'.")
             self.root.afficher_win()
-        
-
-            
-            
-        else:
-            # Planifier l'appel récursif avec after
-            self.after(temps_interval, self.bouger_boule)
+      
 
     def trace_trajectoire(self, event):
         if self.catapulte_tension:
