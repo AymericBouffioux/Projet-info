@@ -19,7 +19,6 @@ class AppForCanvas(ctk.CTk):
         self.fr = ctk.CTkFrame(self)
         self.fr.pack()
         self.can = MyCanvas(self, self.fr, width=AppForCanvas.width_max, height=AppForCanvas.height_max, bg='white' )
-        
         self.can.pack()
         #permet de savoir on est ds quel map
         self.map = map
@@ -68,19 +67,23 @@ class AppForCanvas(ctk.CTk):
 
     def generer_ennemis_fixes(self):
         self.temps_debut = time.time()  # Démarre le chronomètre lorsque les ennemis sont générés
-
         # Générer exactement 3 ennemis
         for i in range(self.ennemis_a_tuer):
             position = self.ennemis_positions[i]
             x, y = position
             ennemi = self.can.create_ennemi(x, y)
             self.ennemis.append(ennemi)
-            
+
+    
+        
+
+
             
     def check_time_limit(self):
         if self.temps_debut is not None:
             temps_ecoule = int(time.time() - self.temps_debut)
             if temps_ecoule >= 15:  # Check if the time limit (5 seconds) is exceeded
+                MyCanvas.in_game = False
                 self.arreter_timer()  # Stop the timer
                 self.withdraw()
                 self.can.unbind("<Motion>") 
@@ -115,6 +118,8 @@ class AppForCanvas(ctk.CTk):
         fr_loser.afficher_loser(self)
 """
 class MyCanvas(ctk.CTkCanvas):
+    #sert a determiner si on joue ou pas (qd on est en jeu la valeur est true sinn false)
+    in_game = False
     def __init__(self, root, *args, **kwargs):
         ctk.CTkCanvas.__init__(self, *args, **kwargs)
         self.root = root
@@ -167,8 +172,6 @@ class MyCanvas(ctk.CTkCanvas):
             self.boule_y = self.catapulte_y - 50
             self.boule = self.create_boule(self.boule_x, self.boule_y)
             
-            # Intro couleur
-            # couleur = get_data("couleur")
         self.bouger_boule()
 
     def bouger_boule(self):
@@ -229,7 +232,7 @@ class MyCanvas(ctk.CTkCanvas):
         if self.temps_debut is not None:
             temps_ecoule = int(time.time() - self.temps_debut)
             
-        if self.root.score < self.root.ennemis_a_tuer and temps_ecoule < 15 and self.flag_action:
+        if self.root.score < self.root.ennemis_a_tuer and temps_ecoule < 15 :
             # Planifier l'appel récursif avec after
             self.after(temps_interval, self.bouger_boule)
         

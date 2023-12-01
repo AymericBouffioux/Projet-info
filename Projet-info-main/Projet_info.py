@@ -15,7 +15,7 @@ class App(ctk.CTk) :
         self.resizable(0,0)
         data_init()
      
-# Création page Main
+        # Création page Main
         fr_main = ctk.CTkFrame(self)
         btn_start = ctk.CTkButton(fr_main, text="Start",height=50, width=100,
                                   command=lambda: self.show_frame(fr_main, fr_start))
@@ -28,7 +28,7 @@ class App(ctk.CTk) :
         btn_options.grid(row=3, column=3)
         fr_main.pack(fill=BOTH, expand=True)
 
-# Création page Start
+        # Création page Start
         fr_start = ctk.CTkFrame(self)
         cadre_boutons_map = ctk.CTkFrame(fr_start, fg_color="#ADD8E6")
         cadre_boutons_map.grid(row=3, column=0, padx=20, pady=(0, 20), sticky="ew", columnspan=5)
@@ -49,14 +49,14 @@ class App(ctk.CTk) :
         # Créer le bouton "Modulation des Catapultes" en haut à droite
         bouton_catapultes = ctk.CTkButton(fr_start, text="Modulation des Catapultes", 
                                           command=lambda: self.show_frame(fr_start, fr_modul_cata))
-        # bouton_catapultes.configure(bg="red", width=11, height=2)  # Changer la couleur, la largeur et la hauteur du bouton
+        
         bouton_catapultes.grid(row=1, column=3, padx=20, pady=(0, 20), sticky="w")
         # Lancer la boucle principale de l'application
         btn_SM = ctk.CTkButton(fr_start, text="Retour page d'acceuil",
                                  command=lambda: self.show_frame(fr_start, fr_main))
         btn_SM.grid(row=0, column=0)
         
-# Création page Help
+        # Création page Help
         fr_help = ctk.CTkFrame(self)
         btn_HM = ctk.CTkButton(fr_help, text="Retour page d'acceuil",
                                  command=lambda: self.show_frame(fr_help, fr_main))
@@ -73,7 +73,7 @@ class App(ctk.CTk) :
             """ , justify="left", font=("Arial",15))
         texte_regles_label.grid(row=2, column=0, padx=20, pady=20, sticky="ew")
         
-# Création page Options
+        # Création page Options
         fr_options = ctk.CTkFrame(self)
         
         btn_OM = ctk.CTkButton(fr_options, text="Retour page d'acceuil",
@@ -273,15 +273,17 @@ class App(ctk.CTk) :
     # slider pr determiner l'elasticité
     def slider_event_elasticite(self, value):
         self.elasticite_value.set(value)
-        print(value)
+        #print(value)
+
     # slider pr determiner la taille
     def slider_event_taille(self, value):
         self.taille_value.set(value)
-        print(value)
+        #print(value)
+
     # slider pr determiner le poids
     def slider_event_poids(self, value):
         self.poids_value.set(value)
-        print(value)
+        #print(value)
     
     # Update color   
     def update_color(self, selected_color):
@@ -301,14 +303,17 @@ class App(ctk.CTk) :
     def save_elasticite(self, elasticite_value):
         print(f"Elasticite sauvée : {elasticite_value.get()}")
         update("elasticite",elasticite_value.get())
+        
     # Fonction pour sauvegarder le poids
     def save_poids(self, poids_value):
         print(f"Poids sauvée : {poids_value.get()}")
         update("poids",poids_value.get())
+
     # Fonction pour sauvegarder la taille
     def save_taille(self, taille_value):
         print(f"Taille sauvée : {taille_value.get()}")
         update("taille",taille_value.get())
+
     # Fonction pour sauvegarder la couleur   
     def save_couleur(self, couleur_value):
         print(f"Couleur sauvée : {couleur_value.get()}")
