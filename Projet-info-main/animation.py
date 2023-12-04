@@ -5,7 +5,6 @@ import time
 from configurator import *
 import fr_winner
 import fr_loser
-import random
 
 class AppForCanvas(ctk.CTk):
     width_max = 900
@@ -39,16 +38,16 @@ class AppForCanvas(ctk.CTk):
 
         self.temps_label = ctk.CTkLabel(self, text="Temps écoulé: 0")
         self.temps_label.place(x=300, y=40)
+        self.ball_count_label = ctk.CTkLabel(self, text="Boules lancées: 0")
+        self.ball_count_label.place(x=300, y=70)  # Adjust the coordinates as needed
 
         self.temps_debut = None
         self.temps_fin_niveau = None  # Ajout de la variable pour stocker le temps de fin du niveau
         self.temps_after_id = None  # Ajout de l'ID du timer
-
-        
+  
         self.generer_ennemis_fixes()# Générer les ennemis initiaux
         self.generer_obstacles()
         self.generer_cata()
-
         self.mise_a_jour_temps()  # Appel initial pour lancer le timer
         
 
@@ -94,6 +93,8 @@ class AppForCanvas(ctk.CTk):
                 position = self.ennemis_positions[i]
                 posx_ennemi, posy_ennemi = position
                 self.can.create_obstacle(posx_ennemi-50,posy_ennemi + 21 ,posx_ennemi+50, 600,'brown')
+                self.can.create_obstacle(posx_ennemi-50,posy_ennemi -50 ,posx_ennemi-45, posy_ennemi + 21,'brown')
+                self.can.create_obstacle(posx_ennemi+45,posy_ennemi -50 ,posx_ennemi+50, posy_ennemi + 21,'brown')
         #support du catapulte
         self.can.create_obstacle(0,550 ,100, 600,'pink')
         
@@ -112,6 +113,7 @@ class AppForCanvas(ctk.CTk):
         if self.temps_debut is not None:
             temps_ecoule = int(time.time() - self.temps_debut)
             self.temps_label.configure(text=f"Temps écoulé: {temps_ecoule} secondes")
+            self.ball_count_label.configure(text=f"Boules lancées: {self.can.ball_counter}")
 
             if self.score < self.ennemis_a_tuer:
                 # Continuer à mettre à jour le temps tant que le score est inférieur au nombre d'ennemis à tuer
@@ -143,7 +145,8 @@ class MyCanvas(ctk.CTkCanvas):
         self.vitesse = 0
         self.trajectoire_ligne = None
         self.trajectoire_points = []
-        self.boule = None 
+        self.boule = None
+        self.ball_counter = 0  # Initialize the ball counter
 
         self.bind("<Button-1>", self.tendre_catapulte)
         self.bind("<ButtonRelease-1>", self.tirer_boule)
@@ -175,93 +178,83 @@ class MyCanvas(ctk.CTkCanvas):
             self.boule_x = self.catapulte_x
             self.boule_y = self.catapulte_y - 50
             self.boule = self.create_boule(self.boule_x, self.boule_y)
-            
-            print("++++++", event.x,event.y)
 
+            # Increment the ball counter
+            self.ball_counter += 1
+            #print(f"Ball Count: {self.ball_counter}")
         self.bouger_boule()
-        
-
        
-    def bouger_boule(self,event = None):
+    def bouger_boule(self):
         rayon = get_data("taille") * 2  # Rayon de la boule
-        
+        temps_interval = 0.05  # Intervalle de temps entre chaque déplacement
+        temps_total = 0
         coefficient_restitution = 0.8  # Coefficient de restitution pour simuler le rebond
-
-        
-        self.boule_x += self.vitesse * math.cos(math.radians(self.angle))
-        self.boule_y -= self.vitesse * math.sin(math.radians(self.angle)) 
-        #print(f"Boule : x = {self.boule_x}, y = {self.boule_y}")
-
-        
-        # Vérifier la collision avec le sol
-        if self.boule_y + rayon > self.winfo_height():
-            self.vitesse *= coefficient_restitution  # Réduire la vitesse avec une perte d'énergie
-            self.boule_y = self.winfo_height() - rayon  # Ajuster la position pour éviter le chevauchement
+        gravite = 9.81
+        while True:
+            self.boule_x += self.vitesse * math.cos(math.radians(self.angle))
+            self.boule_y -= self.vitesse * math.sin(math.radians(self.angle)) - 0.5 * gravite * temps_total ** 2
+            # Vérifier la collision avec le sol
+            if self.boule_y + rayon > self.winfo_height():
+                self.vitesse *= coefficient_restitution  # Réduire la vitesse avec une perte d'énergie
+                self.boule_y = self.winfo_height() - rayon  # Ajuster la position pour éviter le chevauchement
+                temps_total = 0  # Réinitialiser le temps après le rebond
+            self.coords(self.boule, self.boule_x - rayon, self.boule_y - rayon, self.boule_x + rayon, self.boule_y + rayon)
+            self.update()
+            time.sleep(temps_interval)
+            temps_total += temps_interval
+            # Vérifier la collision avec les ennemis
             
+            boule_bbox = self.bbox(self.boule)
+            if boule_bbox:
+                ennemis_a_supprimer = []
+                for ennemi in self.root.ennemis:
+                    ennemi_bbox = self.bbox(ennemi[0])
+                    if ennemi_bbox and boule_bbox[2] >= ennemi_bbox[0] and boule_bbox[0] <= ennemi_bbox[2] and \
+                            boule_bbox[3] >= ennemi_bbox[1] and boule_bbox[1] <= ennemi_bbox[3]:
+                        ennemi[7] -= get_data("poids")*0.1
+                        #mise à jour de la barre des vies                    
 
-        self.coords(self.boule, self.boule_x - rayon, self.boule_y - rayon, self.boule_x + rayon, self.boule_y + rayon)
-
-        # Vérifier la collision avec les ennemis
-        boule_bbox = self.bbox(self.boule)
-        if boule_bbox:
-            ennemis_a_supprimer = []
-            for ennemi in self.root.ennemis:
-                ennemi_bbox = self.bbox(ennemi[0])
-                if ennemi_bbox and boule_bbox[2] >= ennemi_bbox[0] and boule_bbox[0] <= ennemi_bbox[2] and \
-                        boule_bbox[3] >= ennemi_bbox[1] and boule_bbox[1] <= ennemi_bbox[3]:
-                    # ici la vie de l'ennemi diminue en fct du poids selectioné
-                    ennemi[7] -= get_data("poids")*0.1
-                    #mise à jour de la barre des vies                    
-
-                    x0, y0, x1, y1 = self.bbox(ennemi[6])
-                    vie_totale = x1 - x0
-                    nv_vie = vie_totale * ennemi[7]
-                    self.coords(ennemi[6], x0, y0, (x0 + nv_vie) , y1)
-
-                    if ennemi[7] <= 0:
-                        self.delete(ennemi[0])
-                        self.delete(ennemi[1])
-                        self.delete(ennemi[2])
-                        self.delete(ennemi[3])
-                        self.delete(ennemi[4])
-                        self.delete(ennemi[5])
-                        self.delete(ennemi[6])
-                        ennemis_a_supprimer.append(ennemi)
+                        x0, y0, x1, y1 = self.bbox(ennemi[6])
+                        vie_totale = x1 - x0
+                        nv_vie = vie_totale * ennemi[7]
+                        self.coords(ennemi[6], x0, y0, (x0 + nv_vie) , y1)
+                        if ennemi[7] <= 0:
+                            self.delete(ennemi[0])
+                            self.delete(ennemi[1])
+                            self.delete(ennemi[2])
+                            self.delete(ennemi[3])
+                            self.delete(ennemi[4])
+                            self.delete(ennemi[5])
+                            self.delete(ennemi[6])
+                            ennemis_a_supprimer.append(ennemi)
+                            self.delete(self.boule)
+                            self.root.score += 1
+                            self.root.score_label.configure(text=f"Score: {self.root.score}")
+                        else:
+                            self.delete(self.boule)
+                for obstacle in self.find_withtag('obstacle'):
+                    obstacle_bbox = self.bbox(obstacle)
+                    if obstacle_bbox and boule_bbox[2] >= obstacle_bbox[0] and boule_bbox[0] <= obstacle_bbox[2] and \
+                            boule_bbox[3] >= obstacle_bbox[1] and boule_bbox[1] <= obstacle_bbox[3]:
+                        # Supprimer la boule si elle heurte un obstacle
                         self.delete(self.boule)
-                        self.root.score += 1
-                        self.root.score_label.configure(text=f"Score: {self.root.score}")
-                    else:
+                        return  # Quitter la fonction pour arrêter tout mouvement ultérieur de la boule
+                for obstacle in self.find_withtag('obstacle1'):
+                    obstacle_bbox = self.bbox(obstacle)
+                    if obstacle_bbox and boule_bbox[2] >= obstacle_bbox[0] and boule_bbox[0] <= obstacle_bbox[2] and \
+                            boule_bbox[3] >= obstacle_bbox[1] and boule_bbox[1] <= obstacle_bbox[3]:
+                        # Supprimer la boule si elle heurte un obstacle
                         self.delete(self.boule)
-            for obstacle in self.find_withtag('obstacle'):
-                obstacle_bbox = self.bbox(obstacle)
-                if obstacle_bbox and boule_bbox[2] >= obstacle_bbox[0] and boule_bbox[0] <= obstacle_bbox[2] and \
-                        boule_bbox[3] >= obstacle_bbox[1] and boule_bbox[1] <= obstacle_bbox[3]:
-                    # Supprimer la boule si elle heurte un obstacle
-                    self.delete(self.boule)
-                    return  # Quitter la fonction pour arrêter tout mouvement ultérieur de la boule
-            '''for obstacle1 in self.find_withtag('obstacle1'):
-                obstacle_bbox = self.bbox(obstacle1)
-                if obstacle_bbox and boule_bbox[2] >= obstacle_bbox[0] and boule_bbox[0] <= obstacle_bbox[2] and \
-                        boule_bbox[3] >= obstacle_bbox[1] and boule_bbox[1] <= obstacle_bbox[3]:
-                    # Supprimer la boule si elle heurte un obstacle
-                    self.delete(self.boule)
-                    return  # Quitter la fonction pour arrêter tout mouvement ultérieur de la boule'''
-
-            for ennemi in ennemis_a_supprimer:
-                self.root.ennemis.remove(ennemi)
-
+                        return  # Quitter la fonction pour arrêter tout mouvement ultérieur de la boule
+                for ennemi in ennemis_a_supprimer:
+                    self.root.ennemis.remove(ennemi)
             
-        if self.root.score >= self.root.ennemis_a_tuer:
-            self.root.niveau += 1
-            self.root.score_label.configure(text=f"Passer au niveau {self.root.niveau}")
-            self.root.temps_label.configure(text="Niveau terminé! Cliquez sur 'Niveau Suivant'.")
-            self.root.afficher_win()
-        else:
-            self.after(50, self.bouger_boule)
-    
-
-      
-
+            if self.root.score >= self.root.ennemis_a_tuer:
+                self.root.niveau += 1
+                self.root.score_label.configure(text=f"Passer au niveau {self.root.niveau}")
+                self.root.temps_label.configure(text="Niveau terminé! Cliquez sur 'Niveau Suivant'.")
+                self.root.afficher_win()
+        
     def trace_trajectoire(self, event):
         if self.catapulte_tension:
             self.trajectoire_points = [self.catapulte_x, self.catapulte_y - 50, event.x, event.y]
@@ -283,6 +276,11 @@ class MyCanvas(ctk.CTkCanvas):
     def create_obstacle(self , x ,y,x1 ,y1, color):
         obstacle = self.create_rectangle(x , y  , x1 , y1  , fill=color,tags='obstacle')
         return obstacle
+    def create_obstacle2(self , x ,y,x1 ,y1, color):
+        obstacle = self.create_rectangle(x , y  , x1 , y1  , fill=color,tags='obstacle2')
+        obstacle1 = self.create_rectangle(x , y  , x1 , y1  , fill=color,tags='obstacle2')
+        obstacle2 = self.create_rectangle(x , y  , x1 , y1  , fill=color,tags='obstacle2')
+        return obstacle , obstacle1, obstacle2
     
     def create_obstacle1(self):
         obstacle1 = self.create_polygon(900,600,
@@ -304,8 +302,21 @@ class MyCanvas(ctk.CTkCanvas):
                                         857,200,
                                         900,220,
                                         900,600,
-                                        fill='brown',tags='obstacle1')
-        return obstacle1
+                                        fill='grey')
+        obs = self.create_line(500, 372,825,372 , fill="black", width=1,tags='obstacle1')
+        obs1 = self.create_line(425,600,425,325, fill="black", width=1,tags='obstacle1')
+        obs7 = self.create_line(425,325,475,325, fill="black", width=1,tags='obstacle1')
+        obs8 = self.create_line(475,325,475,245, fill="black", width=1,tags='obstacle1')
+        
+        
+
+        obs2 = self.create_line( 425,245, 425,225, fill="black", width=1,tags='obstacle1')
+        obs3 = self.create_line(825,372, 825,325, fill="black", width=1,tags='obstacle1')
+        obs4 = self.create_line(825,245,825,220, fill="black", width=1,tags='obstacle1')
+        obs5 = self.create_line( 425,225, 457,200,fill="black", width=1,tags='obstacle1')
+        obs6 = self.create_line(825,220,857,200, fill="black", width=1,tags='obstacle1')
+        
+        return obstacle1,obs,obs1,obs2 , obs3 , obs4 , obs5 , obs6 , obs7 ,obs8
     
     def create_cata(self):
         
@@ -329,11 +340,10 @@ class MyCanvas(ctk.CTkCanvas):
             color = 'blue'
         if couleur == 2 :
             color = 'pink'
-        
         rayon = get_data("taille") * 2  # Rayon de la boule
         boule = self.create_oval(x - rayon, y - rayon, x + rayon, y + rayon, fill=color)
         return boule
 
 if __name__ == "__main__":
-    root = AppForCanvas("carte 1")
+    root = AppForCanvas("carte 3")
     root.mainloop()

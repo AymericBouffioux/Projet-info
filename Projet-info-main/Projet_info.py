@@ -122,8 +122,8 @@ class App(ctk.CTk) :
         
         # Créer une fenêtre modulation catapulte
         fr_modul_cata = ctk.CTkFrame(self)
-        lbl_modulation_catapult = ctk.CTkLabel(fr_modul_cata, text="Modulation de la catapulte" , justify="center", font=("Arial",20))
-        lbl_modulation_catapult.grid(row=0, column=0, padx=20, pady=20, sticky="ew")
+        #lbl_modulation_catapult = ctk.CTkLabel(fr_modul_cata, text="Modulation de la catapulte" , justify="center", font=("Arial",20))
+        #lbl_modulation_catapult.grid(row=0, column=0, padx=20, pady=20, sticky="ew")
         
         self.elasticite_value = DoubleVar(value=2.5) 
 
@@ -146,8 +146,8 @@ class App(ctk.CTk) :
         
         # Créer une fenêtre modulation boules
         fr_modul_boules = ctk.CTkFrame(self)
-        lbl_modulation_balls = ctk.CTkLabel(fr_modul_boules, text="Modulation des boules" , justify="center", font=("Arial",20))
-        lbl_modulation_balls.grid(row=0, column=0, padx=20, pady=20, sticky="ew")
+        #lbl_modulation_balls = ctk.CTkLabel(fr_modul_boules, text="Modulation des boules" , justify="center", font=("Arial",20))
+        #lbl_modulation_balls.grid(row=0, column=0, padx=20, pady=20, sticky="ew")
 
         self.poids_value = DoubleVar(value=2.5) 
         self.taille_value = DoubleVar(value=2.5)
@@ -282,7 +282,7 @@ class App(ctk.CTk) :
     def save_couleur(self, couleur_value):
         print(f"Couleur sauvée : {couleur_value.get()}")
         update("couleur",couleur_value.get())
- 
+
 # Fermeture app   
 app = App()
 app.mainloop()
