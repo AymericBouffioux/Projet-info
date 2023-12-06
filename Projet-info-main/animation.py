@@ -5,6 +5,7 @@ import time
 from configurator import *
 import fr_winner
 import fr_loser
+from PIL import Image, ImageTk
 
 class AppForCanvas(ctk.CTk):
     width_max = 900
@@ -21,6 +22,11 @@ class AppForCanvas(ctk.CTk):
         self.fr.pack()
         self.can = MyCanvas(self, self.fr, width=AppForCanvas.width_max, height=AppForCanvas.height_max, bg='white' )
         self.can.pack()
+        
+        self.image_principal = Image.open("Projet-info-main/images/angry.jpg")
+        self.image_principal.thumbnail((900,600))
+        self.photo_angry= ImageTk.PhotoImage(master = self.can, image = self.image_principal)
+        self.image_widget_principal = self.can.create_image(AppForCanvas.width_max/2, AppForCanvas.height_max/2, anchor = 'center', image = self.photo_angry)
 
         #permet de savoir on est ds quel map
         self.map = map
@@ -62,7 +68,7 @@ class AppForCanvas(ctk.CTk):
             update("map_actuelle", 2)
 
         else :
-            AppForCanvas.ennemi1, AppForCanvas.ennemi2, AppForCanvas.ennemi3 =(850, 100) , (750, 100), (650, 100)
+            AppForCanvas.ennemi1, AppForCanvas.ennemi2, AppForCanvas.ennemi3 =(850, 350) , (750, 450), (650, 550)
             update("map_actuelle", 3)
 
     def generer_cata(self):
@@ -114,7 +120,8 @@ class AppForCanvas(ctk.CTk):
             temps_ecoule = int(time.time() - self.temps_debut)
             self.temps_label.configure(text=f"Temps écoulé: {temps_ecoule} secondes")
             self.ball_count_label.configure(text=f"Boules lancées: {self.can.ball_counter}")
-
+            #self.can.save_ball_counter(self.can.ball_counter)
+            
             if self.score < self.ennemis_a_tuer:
                 # Continuer à mettre à jour le temps tant que le score est inférieur au nombre d'ennemis à tuer
                 self.temps_after_id = self.after(1000, self.mise_a_jour_temps)
@@ -151,7 +158,10 @@ class MyCanvas(ctk.CTkCanvas):
         self.bind("<Button-1>", self.tendre_catapulte)
         self.bind("<ButtonRelease-1>", self.tirer_boule)
         self.bind("<Motion>", self.trace_trajectoire)
-
+    #def save_ball_counter(self,nb_boules_value) : 
+     #   update("nb_boules",nb_boules_value.get())
+      #  print("nb_boules",nb_boules_value.get())
+        
     def tendre_catapulte(self, event):
         if not self.catapulte_tension:
             self.catapulte_tension = 1
@@ -345,5 +355,5 @@ class MyCanvas(ctk.CTkCanvas):
         return boule
 
 if __name__ == "__main__":
-    root = AppForCanvas("carte 3")
+    root = AppForCanvas("carte 1")
     root.mainloop()

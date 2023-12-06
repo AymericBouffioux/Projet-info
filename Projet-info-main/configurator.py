@@ -7,7 +7,8 @@ def data_init():
             "couleur":0,
             "taille":5,
             "map_actuelle":1,
-            "poids":1}
+            "poids":1,
+            "nb_boules":0}
 
     with open(FILE,"wb") as f:
         dump(data,f)
