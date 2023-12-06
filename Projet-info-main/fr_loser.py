@@ -5,7 +5,7 @@ import animation
 from configurator import get_data
 
 
-
+from PIL import Image, ImageTk
         
 
 def rejouer_niveau(fenetre):
@@ -15,28 +15,12 @@ def rejouer_niveau(fenetre):
     fenetre.withdraw()
     screen.mainloop()
 
-
-def dessiner_tete_de_mort(canvas):
-    # Dessiner le crâne
-    canvas.create_oval(50, 50, 150, 150, outline="black", width=2, fill="black")
-
-    # Dessiner les yeux
-    canvas.create_oval(80, 80, 100, 100, outline="black", width=2, fill="white")
-    canvas.create_oval(120, 80, 140, 100, outline="black", width=2, fill="white")
-
-    # Dessiner le nez (un triangle)
-    canvas.create_polygon(110, 110, 120, 120, 130, 110, outline="black", fill="black")
-
-    # Dessiner la bouche (une ligne courbe)
-    canvas.create_line(80, 130, 140, 130, width=2, smooth=True)
-
 def retour_fr_start(fenetre):
     fenetre.withdraw()
     from Projet_info import App
     screen = App()
     screen.show_fr_start()
     screen.mainloop()
-
 
 
 
@@ -49,6 +33,10 @@ def afficher_loser():
     # Canvas pour la tête de mort
     canvas_tete = ctk.CTkCanvas(fenetre_gameover, width=200, height=200)
     canvas_tete.grid(row=3, column=2)
+    image_principale = Image.open("Projet-info-main/images/tete.jpg")
+    image_principale.thumbnail((200,200))
+    photo_angry= ImageTk.PhotoImage(master = canvas_tete, image = image_principale)
+    image_widget_principal = canvas_tete.create_image(100, 100, anchor = 'center', image = photo_angry)
 
     # Étiquette "GAME OVER"
     ctk.CTkLabel(fenetre_gameover, text="GAME OVER", justify="center", font=("Arial", 60)).grid(row=0, column=2)
@@ -63,47 +51,9 @@ def afficher_loser():
 
 
     # Appeler la fonction pour dessiner la tête de mort
-    dessiner_tete_de_mort(canvas_tete)
+    #dessiner_tete_de_mort(canvas_tete)
     
 
     fenetre_gameover.mainloop()
-afficher_loser()
-
-
-"""
-    # Créez la fenêtre principale
-    fenetre_gameover = ctk.CTk()
-    fenetre_gameover.resizable(0,0)
-
-    # Écrir Winner
-    text1 = ctk.CTkLabel(fenetre_gameover, text="GAME OVER" , justify="center", font=("Arial",60))
-    text1.grid(row = 0, column = 2)
-
-    # Créez un bouton_restart
-    bouton_restart= ctk.CTkButton(fenetre_gameover, text="REJOUER",height=25, width=50)
-    bouton_restart.grid(row = 2, column = 2)
-
-    def dessiner_tete_de_mort(canvas):
-        # Dessiner le crâne
-        canvas_tete.create_oval(50, 50, 150, 150, outline="black", width=2, fill="black")
-
-        # Dessiner les yeux
-        canvas_tete.create_oval(80, 80, 100, 100, outline="black", width=2, fill="white")
-        canvas_tete.create_oval(120, 80, 140, 100, outline="black", width=2, fill="white")
-
-        # Dessiner le nez (un triangle)
-        canvas_tete.create_polygon(110, 110, 120, 120, 130, 110, outline="black", fill="black")
-
-        # Dessiner la bouche (une ligne courbe)
-        canvas_tete.create_line(80, 130, 140, 130, width=2, smooth=True)
-
-    
-    # Créer un canvas
-    canvas_tete = ctk.CTkCanvas(fenetre_gameover, width=200, height=200)
-    canvas_tete.grid(row=3, column=2)
-
-    # Appeler la fonction pour dessiner la tête de mort
-    dessiner_tete_de_mort(canvas_tete)
-
-    # Lancez la boucle principale
-    fenetre_gameover.mainloop()"""
+if __name__ == "__main__":
+    afficher_loser() #ça permet de tester 

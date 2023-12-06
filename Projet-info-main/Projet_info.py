@@ -7,7 +7,6 @@ import customtkinter as ctk
 import animation
 from configurator import *
 
-
 # Multi fenêtre
 class App(ctk.CTk) :
 
@@ -76,7 +75,7 @@ class App(ctk.CTk) :
         self.btn_back_option.grid(row=0, column=0)
 
         # Widget de texte pour afficher le titre
-        self.label_fr_option = ctk.CTkLabel(fr_options, text="Page Option ",fg_color=("#ADD8E6", 'blue'))
+        self.label_fr_option = ctk.CTkLabel(fr_options, text="Page Option ")
         self.label_fr_option.grid(row=1, column=0, padx=20, pady=20, sticky="ew")
         
         # Widget de texte pour afficher le bouton thème
@@ -103,7 +102,7 @@ class App(ctk.CTk) :
         self.dark_radio = ctk.CTkRadioButton(fr_change_theme, text="Sombre ", variable=self.theme_var, value="dark", command=self.set_theme)
         self.light_radio.grid(row=3, column=0, padx=20, pady=20, sticky="ew")
         self.dark_radio.grid(row=4, column=0, padx=20, pady=20, sticky="ew")
-          
+        
         self.btn_back_opt = ctk.CTkButton(fr_change_theme, text="Retour",command=lambda: self.show_frame(fr_change_theme, fr_options))
         self.btn_back_opt.grid(row=1, column=0)
         
@@ -125,7 +124,7 @@ class App(ctk.CTk) :
         self.elasticite_value = DoubleVar(value=2.5) 
 
         # Widget de texte pour afficher le titre
-        self.lbl_elasticity = ctk.CTkLabel(fr_modul_cata, text="Elasticité ",fg_color=("#ADD8E6", 'blue'))
+        self.lbl_elasticity = ctk.CTkLabel(fr_modul_cata, text="Elasticité ")
         self.lbl_elasticity.grid(row=3, column=0, padx=20, pady=20, sticky="ew")
         
         # slider pr determiner l'elasticité
@@ -149,7 +148,7 @@ class App(ctk.CTk) :
         self.couleur_value = DoubleVar(value=0)
         
         # Widget de texte pour afficher le titre
-        self.label_poids = ctk.CTkLabel( fr_modul_boules, text="Poids",fg_color=("#ADD8E6", 'blue'))
+        self.label_poids = ctk.CTkLabel( fr_modul_boules, text="Poids")
         self.label_poids.grid(row=3, column=0, padx=20, pady=20, sticky="ew")
     
         # slider pr determiner la taille
@@ -157,7 +156,7 @@ class App(ctk.CTk) :
         slider_poids.grid(row=4, column=0, padx=20, pady=20, sticky="ew")
         
         # Widget de texte pour afficher le titre
-        self.label_taille = ctk.CTkLabel(fr_modul_boules, text="Taille",fg_color=("#ADD8E6", 'blue'))
+        self.label_taille = ctk.CTkLabel(fr_modul_boules, text="Taille")
         self.label_taille.grid(row=6, column=0, padx=20, pady=20, sticky="ew")
 
         # slider pr determiner le poids
@@ -165,7 +164,7 @@ class App(ctk.CTk) :
         slider_taille.grid(row=7, column=0, padx=20, pady=20, sticky="ew")
         
         # Widget de texte pour afficher le titre
-        self.lbl_color = ctk.CTkLabel(fr_modul_boules, text="Couleur", fg_color=("#ADD8E6", 'blue'))
+        self.lbl_color = ctk.CTkLabel(fr_modul_boules, text="Couleur")
         self.lbl_color.grid(row=8, column=0, padx=20, pady=20, sticky="ew")
 
         # Bouton pour ouvrir le sélecteur de couleur
@@ -349,7 +348,6 @@ class App(ctk.CTk) :
     def save_couleur(self, couleur_value):
         update("couleur",couleur_value.get())
         print(f"Couleur sauvée : {couleur_value.get()}")
-
 
 # Fermeture app   
 app = App()

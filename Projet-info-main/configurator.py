@@ -31,5 +31,7 @@ def read_datas():
         data = load(f)
     print(data)
     
+update("nb_boules",0)  
+
 if __name__=="__main__":
     read_datas()
