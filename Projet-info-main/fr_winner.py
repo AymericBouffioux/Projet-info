@@ -35,8 +35,14 @@ def afficher_win():
             x + 25, y + 90, x + 35, y + 60, x + 10, y + 45,
             x + 40, y + 45, fill=couleur, outline='black'
         )
-
-    score = get_data("nb_boules")
+    nb_boules = get_data("nb_boules")
+    score = 0 
+    if nb_boules <= 10 : 
+        score = 3
+    elif nb_boules >= 10 and nb_boules <= 20 : 
+        score = 2
+    else : 
+       score = 1
     # Mettez ici le score réel que vous avez obtenu
 
     # Dessiner les étoiles sur le même canevas à différentes positions horizontales
@@ -50,10 +56,6 @@ def afficher_win():
         x_position = i * 100  # Ajuster la position horizontale
         y_position = 0        # Ajuster la position verticale
         dessiner_etoile(x_position, y_position, couleur='gray')
-
-    # Afficher le score
-    score_label = ctk.CTkLabel(fenetre_winner, text=f"Score = {score}", font=("Arial", 20))
-    score_label.pack()
 
     # Créez un bouton_restart
     bouton_restart = ctk.CTkButton(fenetre_winner, text="REJOUER", height=25, width=50, command=lambda: rejouer_niveau(fenetre_winner))

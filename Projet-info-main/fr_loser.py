@@ -56,4 +56,4 @@ def afficher_loser():
 
     fenetre_gameover.mainloop()
 if __name__ == "__main__":
-    afficher_loser() #ça permet de tester 
+    afficher_loser() #ça permet de tester

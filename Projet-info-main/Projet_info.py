@@ -352,3 +352,5 @@ class App(ctk.CTk) :
 # Fermeture app   
 app = App()
 app.mainloop()
+
+# ici voir solution qd on ferme ça beug

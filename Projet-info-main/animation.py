@@ -183,16 +183,15 @@ class MyCanvas(ctk.CTkCanvas):
 
             # Calcul vitesse
             elasticite = get_data("elasticite")
-            self.vitesse = (distance / 10) * elasticite
+            self.vitesse = (distance / 10) * (elasticite/2)
             self.boule_x = self.catapulte_x
             self.boule_y = self.catapulte_y - 50
             self.boule = self.create_boule(self.boule_x, self.boule_y)
 
             # Increment the ball counter
             self.root.ball_counter += 1
+            update("nb_boules", self.root.ball_counter )
             self.root.ball_count_label.configure(text=f"Boules lancées: {self.root.ball_counter}")
-            
-            #print(f"Ball Count: {self.ball_counter}")
         self.bouger_boule()
     
         
@@ -206,6 +205,12 @@ class MyCanvas(ctk.CTkCanvas):
             self.boule_x += self.vitesse * math.cos(math.radians(self.angle))
             self.boule_y -= self.vitesse * math.sin(math.radians(self.angle)) - 0.5 * gravite * temps_total ** 2
             # Vérifier la collision avec le sol
+
+
+            #essayer le rebond du niveau chateau
+
+
+
             if self.boule_x + rayon > self.winfo_width():
                 self.delete(self.boule)  # Supprimer la boule
                 return 
@@ -280,10 +285,10 @@ class MyCanvas(ctk.CTkCanvas):
     def create_ennemi(self, x, y):#essayer de mettre en place des images 
         ennemi = self.create_oval(x - 15, y - 40, x + 15, y, fill='green')
         tete = self.create_oval(x - 10, y - 40, x + 10, y - 20, fill='red')
-        bras_gauche = self.create_line(x - 10, y - 30, x - 20, y - 10, fill='brown', width=2)
-        bras_droit = self.create_line(x + 10, y - 30, x + 20, y - 10, fill='brown', width=2)
-        jambe_gauche = self.create_line(x - 10, y-3, x - 10, y + 20, fill='brown', width=2)
-        jambe_droite = self.create_line(x + 10, y-3, x + 10, y + 20, fill='brown', width=2)
+        bras_gauche = self.create_line(x - 10, y - 30, x - 20, y - 10, fill='black', width=2)
+        bras_droit = self.create_line(x + 10, y - 30, x + 20, y - 10, fill='black', width=2)
+        jambe_gauche = self.create_line(x - 10, y-3, x - 10, y + 20, fill='black', width=2)
+        jambe_droite = self.create_line(x + 10, y-3, x + 10, y + 20, fill='black', width=2)
         vie_rectangle = self.create_rectangle(x - 20, y - 50, x + 20, y - 45, fill='red')
         vie_ennemi = 1.0
         
@@ -361,5 +366,5 @@ class MyCanvas(ctk.CTkCanvas):
         return boule
 
 if __name__ == "__main__":
-    root = AppForCanvas("carte 1")
+    root = AppForCanvas("carte 3")
     root.mainloop()
