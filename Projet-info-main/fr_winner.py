@@ -1,16 +1,16 @@
 import customtkinter as ctk
-from configurator import get_data
-import animation
+from configurator import get_data, update
+import affichage_animation
 
 def rejouer_niveau(fenetre):
     map_a_rejouer = get_data("map_actuelle")
-    screen = animation.AppForCanvas("carte " + str(map_a_rejouer))
+    screen = affichage_animation.AppForCanvas("carte " + str(map_a_rejouer))
     fenetre.withdraw()
     screen.mainloop()
 
 def niveau_suivant(fenetre):
     map_a_jouer = get_data("map_actuelle") + 1
-    screen = animation.AppForCanvas("carte " + str(map_a_jouer))
+    screen = affichage_animation.AppForCanvas("carte " + str(map_a_jouer))
     fenetre.withdraw()
     screen.mainloop()
 

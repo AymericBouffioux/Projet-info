@@ -4,7 +4,7 @@ from multiprocessing.sharedctypes import Value
 from tkinter import BOTH, DoubleVar
 from tokenize import Double
 import customtkinter as ctk
-import animation
+import affichage_animation
 from configurator import *
 
 # Multi fenêtre
@@ -128,7 +128,7 @@ class App(ctk.CTk) :
         self.lbl_elasticity.grid(row=3, column=0, padx=20, pady=20, sticky="ew")
         
         # slider pr determiner l'elasticité
-        slider_elasticity = ctk.CTkSlider(fr_modul_cata, from_=1, to=5, command=self.slider_event_elasticite)
+        slider_elasticity = ctk.CTkSlider(fr_modul_cata, from_=1, to=2, command=self.slider_event_elasticite)
         slider_elasticity.grid(row=4, column=0, padx=20, pady=20, sticky="ew")
     
     
@@ -148,16 +148,16 @@ class App(ctk.CTk) :
         self.couleur_value = DoubleVar(value=0)
         
         # Widget de texte pour afficher le titre
-        self.label_poids = ctk.CTkLabel( fr_modul_boules, text="Poids")
-        self.label_poids.grid(row=3, column=0, padx=20, pady=20, sticky="ew")
+        self.label_taille = ctk.CTkLabel( fr_modul_boules, text="Taille")
+        self.label_taille.grid(row=3, column=0, padx=20, pady=20, sticky="ew")
     
         # slider pr determiner la taille
         slider_poids = ctk.CTkSlider(fr_modul_boules, from_=1, to=5, command=self.slider_event_taille)
         slider_poids.grid(row=4, column=0, padx=20, pady=20, sticky="ew")
         
         # Widget de texte pour afficher le titre
-        self.label_taille = ctk.CTkLabel(fr_modul_boules, text="Taille")
-        self.label_taille.grid(row=6, column=0, padx=20, pady=20, sticky="ew")
+        self.label_poids = ctk.CTkLabel(fr_modul_boules, text="Poids")
+        self.label_poids.grid(row=6, column=0, padx=20, pady=20, sticky="ew")
 
         # slider pr determiner le poids
         slider_taille= ctk.CTkSlider(fr_modul_boules, from_=2.5, to=7.5, command=self.slider_event_poids)
@@ -198,18 +198,20 @@ class App(ctk.CTk) :
 # Utilisation de fonctions dans d'autres documents 
     def bouton_clic(self, nom):
         # Accès à animation
-        if nom == "Carte 1":
-            screen1 = animation.AppForCanvas('carte 1')
+        if nom == "Carte 1" :
+            screen1 = affichage_animation.AppForCanvas('carte 1')
             self.hide_frame()
             screen1.mainloop()
 
         elif nom == "Carte 2":
-            screen2 = animation.AppForCanvas('carte 2')
+            
+            screen2 = affichage_animation.AppForCanvas('carte 2')
             self.hide_frame()
             screen2.mainloop()
 
         elif nom == "Carte 3":
-            screen3 = animation.AppForCanvas('carte 3')
+            
+            screen3 = affichage_animation.AppForCanvas('carte 3')
             self.hide_frame()
             screen3.mainloop()
         #print("Le bouton '%s' a été cliqué" % (nom))

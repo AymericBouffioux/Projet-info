@@ -3,143 +3,6 @@ import customtkinter as ctk
 import math
 import time
 from configurator import *
-import fr_winner
-import fr_loser
-from PIL import Image, ImageTk
-
-class AppForCanvas(ctk.CTk):
-    width_max = 900
-    height_max = 600
-
-    ennemi1 = None
-    ennemi2 = None
-    ennemi3 = None
-
-    def __init__(self, map,  *args, **kwargs):
-        ctk.CTk.__init__(self, *args, **kwargs)
-        self.title("Angry Balls")
-        self.fr = ctk.CTkFrame(self)
-        self.fr.pack()
-        self.can = MyCanvas(self, self.fr, width=AppForCanvas.width_max, height=AppForCanvas.height_max, bg='white' )
-        self.can.pack()
-        
-        self.image_principal = Image.open("Projet-info-main/images/angry.jpg")
-        self.image_principal.thumbnail((900,700))
-        self.photo_angry= ImageTk.PhotoImage(master = self.can, image = self.image_principal)
-        self.image_widget_principal = self.can.create_image(AppForCanvas.width_max/2, AppForCanvas.height_max/2 +30, anchor = 'center', image = self.photo_angry)
-        self.niveau = None        # Initialize the level
-        #permet de savoir on est dans quel map
-        self.map = map
-        self.determiner_map()
-        self.score_label = ctk.CTkLabel(self.can, text="Score: 0", fg_color='lightgreen', text_color = ("black", "black"))
-        self.score_label.place(x=450, y=10)
-
-        self.ennemis_positions = [AppForCanvas.ennemi1, AppForCanvas.ennemi2, AppForCanvas.ennemi3]
-        self.ennemis_a_tuer = len(self.ennemis_positions)
-        self.score = 0          # Initialize the score
-        
-
-        self.level_label = ctk.CTkLabel(self.can, text="Niveau: Actuel",  fg_color='#FF6666', text_color = ("black", "black"))
-        self.level_label.place(x=250, y=10)  # Adjust the coordinates as needed
-
-        self.ball_counter = 0  # Initialize the ball counter
-
-
-        # Initialiser une liste vide pour stocker les ennemis
-        self.ennemis = []
-        
-        self.temps_label = ctk.CTkLabel(self.can, text="Temps écoulé: 0", fg_color='lightblue', text_color = ("black", "black"))
-        self.temps_label.place(x=700, y=10)
-        self.ball_count_label = ctk.CTkLabel(self.can, text="Boules lancées: 0",  fg_color='yellow', text_color = ("black", "black"))
-        self.ball_count_label.place(x=50, y=10)  # Adjust the coordinates as needed
-        self.temps_debut = None
-        self.temps_after_id = None  # Ajout de l'ID du timer
-  
-        self.generer_ennemis_fixes()# Générer les ennemis initiaux
-        self.generer_obstacles()
-        self.generer_cata()
-        self.mise_a_jour_temps()  # Appel initial pour lancer le timer
-
-    def determiner_map(self):
-        if self.map == 'carte 1':
-            AppForCanvas.ennemi1, AppForCanvas.ennemi2, AppForCanvas.ennemi3 = (850, 350) , (750, 450), (650, 550)
-            update("map_actuelle", 1)
-            self.niveau = 1
-
-        elif self.map == 'carte 2':
-            AppForCanvas.ennemi1, AppForCanvas.ennemi2, AppForCanvas.ennemi3 =(850, 350) , (750, 450), (650, 550)
-            update("map_actuelle", 2)
-            self.niveau = 2
-
-        else :
-            AppForCanvas.ennemi1, AppForCanvas.ennemi2, AppForCanvas.ennemi3 =(850, 300) , (650, 350), (450, 300)
-            update("map_actuelle", 3)
-            self.niveau = 3
-        
-
-    def generer_cata(self):
-        self.can.create_cata()
-
-    def generer_ennemis_fixes(self):
-        self.temps_debut = time.time()  # Démarre le chronomètre lorsque les ennemis sont générés
-
-        # Générer exactement 3 ennemis
-        for i in range(self.ennemis_a_tuer):
-            position = self.ennemis_positions[i]
-            posx_ennemi, posy_ennemi = position
-            ennemi = self.can.create_ennemi(posx_ennemi, posy_ennemi)
-            self.ennemis.append(ennemi)
-
-    def generer_obstacles(self):
-        if self.map == 'carte 1' :
-            for i in range(self.ennemis_a_tuer):
-                position = self.ennemis_positions[i]
-                posx_ennemi, posy_ennemi = position
-                self.can.create_obstacle(posx_ennemi-50,posy_ennemi + 21 ,posx_ennemi+50, 600,'#966F33')
-
-        if self.map == 'carte 3':
-            self.can.create_obstacle1()
-        
-        if self.map == 'carte 2' :
-            for i in range(self.ennemis_a_tuer):
-                position = self.ennemis_positions[i]
-                posx_ennemi, posy_ennemi = position
-                self.can.create_obstacle(posx_ennemi-50,posy_ennemi + 21 ,posx_ennemi+50, 600,'#966F33')
-                self.can.create_obstacle(posx_ennemi-50,posy_ennemi -30 ,posx_ennemi-45, posy_ennemi + 21,'#C0C0C0')
-        
-    def check_time_limit(self):
-        if self.temps_debut is not None:
-            temps_ecoule = int(time.time() - self.temps_debut)
-            if temps_ecoule >= 60:  # Check if the time limit (5 seconds) is exceeded
-                MyCanvas.in_game = False
-                self.arreter_timer()  # Stop the timer
-                self.withdraw()
-                self.can.unbind("<Motion>") 
-                fr_loser.afficher_loser() # Show the lose window
-       
-    
-    def mise_a_jour_temps(self):
-
-        if self.temps_debut is not None:
-            temps_ecoule = int(time.time() - self.temps_debut)
-            self.temps_label.configure(text=f"Temps écoulé: {temps_ecoule} secondes")
-            self.level_label.configure(text=f"Niveau : {self.niveau} ")
-            
-            if self.score < self.ennemis_a_tuer:
-                # Continuer à mettre à jour le temps tant que le score est inférieur au nombre d'ennemis à tuer
-                self.temps_after_id = self.after(1000,self.mise_a_jour_temps)
-                 # Check if the time limit has been exceeded
-                self.check_time_limit()
-            
-
-    def arreter_timer(self):
-        # Arrêter le timer s'il est en cours
-        if self.temps_after_id is not None:
-            self.after_cancel(self.temps_after_id)
-    
-    def afficher_win(self):
-        self.withdraw()  # Masquer la fenêtre principale
-        fr_winner.afficher_win()
 
 class MyCanvas(ctk.CTkCanvas):
     def __init__(self, root, *args, **kwargs):
@@ -159,7 +22,13 @@ class MyCanvas(ctk.CTkCanvas):
         self.bind("<ButtonRelease-1>", self.tirer_boule)
         self.bind("<Motion>", self.trace_trajectoire)
     
-    
+        self.root.protocol("WM_DELETE_WINDOW", self.on_close)
+
+    def on_close(self):
+        # Function to handle window close event
+        if hasattr(self, 'boule') and self.boule:
+            self.delete(self.boule)
+        self.root.destroy()
         
     def tendre_catapulte(self, event):
         if not self.catapulte_tension:
@@ -199,7 +68,7 @@ class MyCanvas(ctk.CTkCanvas):
         rayon = get_data("taille") * 2  # Rayon de la boule
         temps_interval = 0.05  # Intervalle de temps entre chaque déplacement
         temps_total = 0
-        coefficient_restitution = 0.8  # Coefficient de restitution pour simuler le rebond
+        coefficient_restitution = 0.5  # Coefficient de restitution pour simuler le rebond
         gravite = 9.81
         while True:
             self.boule_x += self.vitesse * math.cos(math.radians(self.angle))
@@ -207,9 +76,15 @@ class MyCanvas(ctk.CTkCanvas):
             # Vérifier la collision avec le sol
 
 
-            #essayer le rebond du niveau chateau
-
-
+ 
+            if self.root.niveau == 3 :
+                rebond = self.find_withtag('obstacle2')
+                rebond_bbox = self.bbox(rebond)
+                if self.boule_y + rayon > rebond_bbox[1] and self.boule_x + rayon > rebond_bbox[0] and self.boule_x + rayon <  rebond_bbox[2] : 
+                        self.vitesse *= coefficient_restitution  # Réduire la vitesse avec une perte d'énergie
+                        self.boule_y =  rebond_bbox[1]- rayon  # Ajuster la position pour éviter le chevauchement
+                        temps_total = 0  # Réinitialiser le temps après le rebond
+            
 
             if self.boule_x + rayon > self.winfo_width():
                 self.delete(self.boule)  # Supprimer la boule
@@ -223,13 +98,14 @@ class MyCanvas(ctk.CTkCanvas):
             time.sleep(temps_interval)
             temps_total += temps_interval
 
-            # Vérifier la collision avec les ennemis
+            # Vérifier la collision avec les ennemis si la boule existe
             
             boule_bbox = self.bbox(self.boule)
             if boule_bbox:
                 ennemis_a_supprimer = []
                 for ennemi in self.root.ennemis:
                     ennemi_bbox = self.bbox(ennemi[0])
+                    ennemi_bbox = self.bbox(ennemi[1])
                     if ennemi_bbox and boule_bbox[2] >= ennemi_bbox[0] and boule_bbox[0] <= ennemi_bbox[2] and \
                             boule_bbox[3] >= ennemi_bbox[1] and boule_bbox[1] <= ennemi_bbox[3]:
                         ennemi[7] -= get_data("poids")*0.1
@@ -324,7 +200,7 @@ class MyCanvas(ctk.CTkCanvas):
                                         900,220,
                                         900,600,
                                         fill='#808080')
-        obs = self.create_line(500, 372,825,372 , fill="black", width=1,tags='obstacle1')
+        obs = self.create_line(500, 372,825,372 , fill="black", width=1,tags='obstacle2')
         obs1 = self.create_line(425,600,425,325, fill="black", width=1,tags='obstacle1')
         obs7 = self.create_line(425,325,475,325, fill="black", width=1,tags='obstacle1')
         obs8 = self.create_line(475,325,475,245, fill="black", width=1,tags='obstacle1')
@@ -364,7 +240,8 @@ class MyCanvas(ctk.CTkCanvas):
         rayon = get_data("taille") * 2  # Rayon de la boule
         boule = self.create_oval(x - rayon, y - rayon, x + rayon, y + rayon, fill=color)
         return boule
+    
+
 
 if __name__ == "__main__":
-    root = AppForCanvas("carte 3")
-    root.mainloop()
+    print("Veuillez lancer le fichier afichage_animation si vous voulez tester l'animation")
