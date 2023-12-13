@@ -24,6 +24,8 @@ class App(ctk.CTk) :
         self.btn_help.grid(row=3, column=1)
         self.btn_options = ctk.CTkButton(fr_main, text="Options",command=lambda: self.show_frame(fr_main, fr_options))
         self.btn_options.grid(row=3, column=3)
+        self.btn_quitter = ctk.CTkButton(fr_main, text="Quitter",height=20, width=70,command=lambda:self.quitter(fr_main))
+        self.btn_quitter.grid(row=0, column=1)
         fr_main.pack(fill=BOTH, expand=True)
 
         # Création page Start
@@ -181,7 +183,9 @@ class App(ctk.CTk) :
         self.btn_Save_boules.grid(row=1, column=0)
 
     # Fonctions supplémentaires
-
+    def quitter(self,frame):
+        frame.quit()
+    
     #c'est pr pouvoir afficher fr_start
     def show_fr_start(self):
         # Assurez-vous que fr_start est bien configuré avant de l'afficher
@@ -353,5 +357,3 @@ class App(ctk.CTk) :
 # Fermeture app   
 app = App()
 app.mainloop()
-
-# ici voir solution qd on ferme ça beug
