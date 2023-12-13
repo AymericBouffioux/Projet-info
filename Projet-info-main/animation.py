@@ -21,8 +21,6 @@ class MyCanvas(ctk.CTkCanvas):
         self.bind("<Button-1>", self.tendre_catapulte)
         self.bind("<ButtonRelease-1>", self.tirer_boule)
         self.bind("<Motion>", self.trace_trajectoire)
-    
-        self.root.protocol("WM_DELETE_WINDOW", self.on_close)
 
     def on_close(self):
         # Function to handle window close event

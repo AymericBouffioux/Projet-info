@@ -160,7 +160,7 @@ class App(ctk.CTk) :
         self.label_poids.grid(row=6, column=0, padx=20, pady=20, sticky="ew")
 
         # slider pr determiner le poids
-        slider_taille= ctk.CTkSlider(fr_modul_boules, from_=2.5, to=7.5, command=self.slider_event_poids)
+        slider_taille= ctk.CTkSlider(fr_modul_boules, from_=5, to=8, command=self.slider_event_poids)
         slider_taille.grid(row=7, column=0, padx=20, pady=20, sticky="ew")
         
         # Widget de texte pour afficher le titre
