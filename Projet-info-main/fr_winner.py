@@ -69,24 +69,21 @@ def afficher_win():
         
     map_actuelle = get_data("map_actuelle") 
     if map_actuelle < 3:
-        bouton_next_map = ctk.CTkButton(fenetre_winner, text="CARTE SUIVANTE", command=lambda: niveau_suivant(fenetre_winner))
+        bouton_next_map = ctk.CTkButton(fenetre_winner, text="CARTE SUIVANTE",height=25, width=150, command=lambda: niveau_suivant(fenetre_winner))
         bouton_next_map.pack()
 
     # Créez un bouton_restart
-    bouton_restart = ctk.CTkButton(fenetre_winner, text="REJOUER", height=25, width=50, command=lambda: rejouer_niveau(fenetre_winner))
+    bouton_restart = ctk.CTkButton(fenetre_winner, text="REJOUER", height=25, width=150, command=lambda: rejouer_niveau(fenetre_winner))
     bouton_restart.pack()
     # Bouton "Retour"
-    bouton_retour_start = ctk.CTkButton(fenetre_winner, text="RETOUR", height=25, width=50, command=lambda: retour_fr_start(fenetre_winner))
+    bouton_retour_start = ctk.CTkButton(fenetre_winner, text="RETOUR", height=25, width=100, command=lambda: retour_fr_start(fenetre_winner))
     bouton_retour_start.pack()
-    
-    bouton_quitter = ctk.CTkButton(fenetre_winner, text="QUITTER", height=25, width=50, command=lambda: quitter(fenetre_winner))
+    # Bouton "Quitter"
+    bouton_quitter = ctk.CTkButton(fenetre_winner, text="QUITTER", height=20, width=20, command=lambda: quitter(fenetre_winner))
     bouton_quitter.pack()
     
-    # Créez un bouton_next_map 
-    
-    # Lancez la boucle principale
     fenetre_winner.mainloop()
 
-# Exemple d'utilisation
+# Test
 if __name__ == "__main__":
     afficher_win()

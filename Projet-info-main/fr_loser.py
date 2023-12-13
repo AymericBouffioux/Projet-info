@@ -5,7 +5,6 @@ from PIL import Image, ImageTk
         
 
 def rejouer_niveau(fenetre):
-
     map_a_rejouer = get_data("map_actuelle")
     screen = affichage_animation.AppForCanvas("carte " + str(map_a_rejouer))
     fenetre.withdraw()
@@ -14,9 +13,7 @@ def rejouer_niveau(fenetre):
 def retour_fr_start(fenetre):
     fenetre.withdraw()
     from Projet_info import App
-    #screen = App()
-    #screen.show_fr_start()
-    #screen.mainloop()
+    
 
 
 def quitter(frame):
@@ -40,19 +37,21 @@ def afficher_loser():
     ctk.CTkLabel(fenetre_gameover, text="GAME OVER", justify="center", font=("Arial", 60)).grid(row=0, column=2)
 
     # Bouton "REJOUER"
-    bouton_restart = ctk.CTkButton(fenetre_gameover, text="REJOUER", height=25, width=50, command=lambda: rejouer_niveau(fenetre_gameover))
+    bouton_restart = ctk.CTkButton(fenetre_gameover, text="REJOUER", height=25, width=100, command=lambda: rejouer_niveau(fenetre_gameover))
     bouton_restart.grid(row=1, column=2)
 
     # Bouton "Retour"
-    bouton_retour_start = ctk.CTkButton(fenetre_gameover, text="RETOUR", height=25, width=50, command=lambda: retour_fr_start(fenetre_gameover))
+    bouton_retour_start = ctk.CTkButton(fenetre_gameover, text="RETOUR", height=25, width=100, command=lambda: retour_fr_start(fenetre_gameover))
     bouton_retour_start.grid(row=2, column=2)
     
     # Bouton "quitter"
-    bouton_quitter = ctk.CTkButton(fenetre_gameover, text="QUITTER", height=25, width=50, command=lambda: quitter(fenetre_gameover))
+    bouton_quitter = ctk.CTkButton(fenetre_gameover, text="QUITTER", height=20, width=50, command=lambda: quitter(fenetre_gameover))
     bouton_quitter.grid(row=3, column=2)
 
     
 
     fenetre_gameover.mainloop()
+
+
 if __name__ == "__main__":
     afficher_loser() #ça permet de tester

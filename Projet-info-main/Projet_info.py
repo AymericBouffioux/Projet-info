@@ -11,7 +11,7 @@ class App(ctk.CTk) :
         ctk.CTk.__init__(self, *args, **kwargs)
         self.title("Angry Balls")
         self.resizable(0,0)
-        data_init()
+        data_init()                     #chaque fois que je relance le jeu les paramètre sont réinitialisés
      
         # Création page Main
         fr_main = ctk.CTkFrame(self)
@@ -31,9 +31,9 @@ class App(ctk.CTk) :
         surround_btns_map.grid(row=3, column=0, padx=20, pady=(0, 20), sticky="ew", columnspan=5)
 
         # Créer les boutons "Map1", "Map2" et "Map3" centrés horizontalement dans le rectangle rose
-        self.btn_map1 = ctk.CTkButton(self.fr_start, text="Carte 1", command=lambda: self.bouton_clic('Carte 1'))
-        self.btn_map2 = ctk.CTkButton(self.fr_start, text="Carte 2", command=lambda: self.bouton_clic('Carte 2'))
-        self.btn_map3 = ctk.CTkButton(self.fr_start, text="Carte 3", command=lambda: self.bouton_clic('Carte 3'))
+        self.btn_map1 = ctk.CTkButton(self.fr_start, text="Carte 1", command=lambda: self.lancer_jeu('Carte 1'))
+        self.btn_map2 = ctk.CTkButton(self.fr_start, text="Carte 2", command=lambda: self.lancer_jeu('Carte 2'))
+        self.btn_map3 = ctk.CTkButton(self.fr_start, text="Carte 3", command=lambda: self.lancer_jeu('Carte 3'))
         self.btn_map1.grid(row=3, column=0, padx=20, pady=(0, 20), sticky="w")
         self.btn_map2.grid(row=3, column=2, padx=20, pady=(0, 20), sticky="w")
         self.btn_map3.grid(row=3, column=4, padx=20, pady=(0, 20), sticky="w")
@@ -179,25 +179,16 @@ class App(ctk.CTk) :
         self.btn_Save_boules = ctk.CTkButton(fr_modul_boules, text="Sauver",command=lambda: (self.save_poids(self.poids_value), self.save_taille(self.taille_value),self.save_couleur(self.couleur_value)))
         self.btn_Save_boules.grid(row=1, column=0)
 
-    
+
     def quitter(self,frame):        #permet de fermer la fenetre
         frame.quit()
     
     
-    def show_fr_start(self):
-        self.fr_start.pack(fill=BOTH, expand=True)
-
-    # Création showframe
-    def show_frame(self, frame_forget, frame_display):
+    def show_frame(self, frame_forget, frame_display):   #affiche la fenetre souhaitée 
         frame_forget.pack_forget()
         frame_display.pack(fill=BOTH, expand=True)
 
-    def hide_frame(self):
-        self.withdraw()
-      
-# Utilisation de fonctions dans d'autres documents 
-    def bouton_clic(self, nom):
-        # Accès à animation
+    def lancer_jeu(self, nom):                      #en fct du boutton cliqué ça lance le bon niveau
         if nom == "Carte 1" :
             screen1 = affichage_animation.AppForCanvas('carte 1')
             self.destroy()
@@ -216,17 +207,14 @@ class App(ctk.CTk) :
     # Fonction pour changer le thème de la fenêtre
     def set_theme(self):
         selected_theme = self.theme_var.get()
-        
-        if selected_theme == "light":       # Change le thème en light mode
+        if selected_theme == "light":               # Change le thème en light mode
             ctk.set_appearance_mode("Light")
-        
-        elif selected_theme == "dark":          # Change le thème en dark mode
+        elif selected_theme == "dark":              # Change le thème en dark mode
             ctk.set_appearance_mode("Dark")
 
    
     # Fonction pour mettre à jour la langue
     def update_language(self, selected_language):
-        print('Langue selectionnée', selected_language)
         if selected_language == "Français":
             self.btn_start.configure(text = "Démarrer")
             self.btn_help.configure(text = "Règles")
@@ -305,7 +293,7 @@ class App(ctk.CTk) :
         
     # slider pr determiner l'elasticité
     def slider_event_elasticite(self, value):
-        self.elasticite_value.set(value)
+        self.elasticite_value.set(value)                # Stocke la valeur récupérée du slider dans la variable self.elasticite_value.
 
     # slider pr determiner la taille
     def slider_event_taille(self, value):
@@ -328,7 +316,7 @@ class App(ctk.CTk) :
 
     # Fonction pour sauvegarder l'élasticité
     def save_elasticite(self, elasticite_value):
-        update("elasticite",elasticite_value.get())
+        update("elasticite",elasticite_value.get())             #mise a jour de la valeur elasticité
 
         
     # Fonction pour sauvegarder le poids
