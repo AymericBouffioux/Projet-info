@@ -59,11 +59,11 @@ class App(ctk.CTk) :
         self.lbl_title_help = ctk.CTkLabel(fr_help, text="Règles" , justify="center", font=("Arial",60))
         self.lbl_title_help.grid(row=1, column=0, padx=20, pady=20, sticky="ew")
         self.lbl_help_rules = ctk.CTkLabel(fr_help,height=200, width=100, text="""
-            Règle 1 : Objectif principal : Éliminer tous les ennemis en lançant habilement des boules sur les structures les abritant.
+            Règle 1 : Objectif principal : Éliminer tous les ennemis en lançant habilement des boules dessus.
             Règle 2 : Choix stratégique : Sélectionner judicieusement le poids et la taille des boules pour optimiser la réussite du niveau.
             Règle 3 : Précision catapultée : Utiliser la catapulte avec précision pour cibler et atteindre les ennemis.
-            Règle 4 : Chronométrage optimal : Terminer le niveau en 7 secondes pour obtenir 3 étoiles, en 12 secondes pour 2 étoiles.
-            Règle 5 : Réactivité requise : Assurer un mouvement constant dans les 15 secondes, sinon la partie se termine.
+            Règle 4 : Chronométrage optimal : Terminer le niveau en le moins de boules possible.
+            Règle 5 : Réactivité requise : Terminer le niveau en maximum 60 secondes.
             """ , justify="left", font=("Arial",15))
         self.lbl_help_rules.grid(row=2, column=0, padx=20, pady=20, sticky="ew")
         
@@ -244,12 +244,12 @@ class App(ctk.CTk) :
             self.btn_back_option.configure(text = "Retour à la page d'acceuil")
             self.lbl_title_help.configure(text = "Règles")
             self.lbl_help_rules.configure(text = """
-            Règle 1 : Objectif principal : Éliminer tous les ennemis en lançant habilement des boules sur les structures les abritant.
+            Règle 1 : Objectif principal : Éliminer tous les ennemis en lançant habilement des boules dessus.
             Règle 2 : Choix stratégique : Sélectionner judicieusement le poids et la taille des boules pour optimiser la réussite du niveau.
             Règle 3 : Précision catapultée : Utiliser la catapulte avec précision pour cibler et atteindre les ennemis.
-            Règle 4 : Chronométrage optimal : Terminer le niveau en 7 secondes pour obtenir 3 étoiles, en 12 secondes pour 2 étoiles.
-            Règle 5 : Réactivité requise : Assurer un mouvement constant dans les 15 secondes, sinon la partie se termine.
-                """)
+            Règle 4 : Chronométrage optimal : Terminer le niveau en le moins de boules possible.
+            Règle 5 : Réactivité requise : Terminer le niveau en maximum 60 secondes.
+            """)
             self.label_fr_option.configure(text = "Page d'options")
             self.btn_theme.configure(text = "Thème")
             self.lbl_change_theme.configure(text = "Changer le thème")
@@ -282,12 +282,12 @@ class App(ctk.CTk) :
             self.btn_back_option.configure(text = "Back to home page")
             self.lbl_title_help.configure(text = "Rules")
             self.lbl_help_rules.configure(text = """
-                Rule 1: Main objective: Eliminate all enemies by skillfully launching balls at the structures housing them.
-                Rule 2: Strategic choice: Select the weight and size of the balls wisely to optimize level success.
-                Rule 3: Catapult precision: Use the catapult with precision to target and reach enemies.
-                Rule 4: Optimal timing: Complete the level in 7 seconds for 3 stars, in 12 seconds for 2 stars.
-                Rule 5: Required responsiveness: Ensure constant movement within 15 seconds, or the game ends.
-                """)
+            Rule 1: Main objective: Eliminate all enemies by skillfully throwing balls at them.
+            Rule 2: Strategic choice: Wisely select ball weight and size to optimize level success.
+            Rule 3: Catapult accuracy: Use the catapult with precision to target and hit enemies.
+            Rule 4: Optimum timing: Complete the level in as few balls as possible.
+            Rule 5: Reactivity required: Complete the level in a maximum of 60 seconds.
+            """)
             self.label_fr_option.configure(text = "Option page")
             self.btn_theme.configure(text = "Theme")
             self.lbl_change_theme.configure(text = "Change Theme")

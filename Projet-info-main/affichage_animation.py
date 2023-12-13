@@ -23,7 +23,7 @@ class AppForCanvas(ctk.CTk):
         self.can = animation.MyCanvas(self, self.fr, width=AppForCanvas.width_max, height=AppForCanvas.height_max, bg='white' )
         self.can.pack()
         
-        self.max_timing = 10
+        self.max_timing = 5
         
         self.image_principal = Image.open("Projet-info-main/images/angry.jpg")
         self.image_principal.thumbnail((900,700))
@@ -128,7 +128,7 @@ class AppForCanvas(ctk.CTk):
             self.temps_label.configure(text=f"Temps restant: {temps_restant} secondes")
             self.level_label.configure(text=f"Niveau : {self.niveau} ")
             
-            if self.score < self.ennemis_a_tuer:
+            if self.score < self.ennemis_a_tuer and self.can.winfo_exists:
                 # Continuer à mettre à jour le temps tant que le score est inférieur au nombre d'ennemis à tuer
                 self.temps_after_id = self.after(1000,self.mise_a_jour_temps)
                  # Check if the time limit has been exceeded
