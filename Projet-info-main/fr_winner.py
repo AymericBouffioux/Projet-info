@@ -13,7 +13,7 @@ def rejouer_niveau(fenetre):
 
 def niveau_suivant(fenetre):
     map_a_jouer = get_data("map_actuelle") + 1
-    screen = animation.AppForCanvas("carte " + str(map_a_jouer))
+    screen = affichage_animation.AppForCanvas("carte " + str(map_a_jouer))
     screen = affichage_animation.AppForCanvas("carte " + str(map_a_jouer))
     fenetre.withdraw()
     screen.mainloop()
@@ -28,7 +28,7 @@ def afficher_win():
     fenetre_winner.resizable(0, 0)
 
     # Écrire Winner
-    lbl_winner = ctk.CTkLabel(fenetre_winner, text="Winner", justify="center", font=("Arial", 60))
+    lbl_winner = ctk.CTkLabel(fenetre_winner, text="WINNER", justify="center", font=("Arial", 60))
     lbl_winner.pack()
 
     # Créez un seul canevas pour les étoiles
@@ -67,7 +67,7 @@ def afficher_win():
         
     map_actuelle = get_data("map_actuelle") 
     if map_actuelle < 3:
-        bouton_next_map = ctk.CTkButton(fenetre_winner, text="Carte suivante", command=lambda: niveau_suivant(fenetre_winner))
+        bouton_next_map = ctk.CTkButton(fenetre_winner, text="CARTE SUIVANTE", command=lambda: niveau_suivant(fenetre_winner))
         bouton_next_map.pack()
 
     # Créez un bouton_restart

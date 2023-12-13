@@ -299,7 +299,7 @@ class App(ctk.CTk) :
             self.btn_save_ela.configure(text = "Save")
             self.btn_retour_ela.configure(text = "Return to map choice")
             self.label_poids.configure(text = "Weight")
-            self.label_taille.configure(text = "Height")
+            self.label_taille.configure(text = "Size")
             self.lbl_color.configure(text = "Color")
             self.btn_back_boules.configure(text = "Return to map choice")
             self.btn_Save_boules.configure(text = "Save")
