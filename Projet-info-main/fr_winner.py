@@ -1,7 +1,6 @@
 import customtkinter as ctk
 from configurator import get_data
 import animation
-from configurator import get_data, update
 import affichage_animation
 
 def rejouer_niveau(fenetre):
@@ -21,7 +20,10 @@ def niveau_suivant(fenetre):
 def quitter(frame):
     frame.destroy()
     
-    
+def retour_fr_start(fenetre):
+    fenetre.withdraw()
+    from Projet_info import App
+   
 def afficher_win():
     # Créez la fenêtre principale
     fenetre_winner = ctk.CTk()
@@ -73,7 +75,10 @@ def afficher_win():
     # Créez un bouton_restart
     bouton_restart = ctk.CTkButton(fenetre_winner, text="REJOUER", height=25, width=50, command=lambda: rejouer_niveau(fenetre_winner))
     bouton_restart.pack()
-
+    # Bouton "Retour"
+    bouton_retour_start = ctk.CTkButton(fenetre_winner, text="RETOUR", height=25, width=50, command=lambda: retour_fr_start(fenetre_winner))
+    bouton_retour_start.pack()
+    
     bouton_quitter = ctk.CTkButton(fenetre_winner, text="QUITTER", height=25, width=50, command=lambda: quitter(fenetre_winner))
     bouton_quitter.pack()
     

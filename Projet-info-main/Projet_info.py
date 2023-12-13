@@ -1,8 +1,5 @@
 
-from cgitb import text
-from multiprocessing.sharedctypes import Value
 from tkinter import BOTH, DoubleVar
-from tokenize import Double
 import customtkinter as ctk
 import affichage_animation
 from configurator import *
@@ -182,13 +179,12 @@ class App(ctk.CTk) :
         self.btn_Save_boules = ctk.CTkButton(fr_modul_boules, text="Sauver",command=lambda: (self.save_poids(self.poids_value), self.save_taille(self.taille_value),self.save_couleur(self.couleur_value)))
         self.btn_Save_boules.grid(row=1, column=0)
 
-    # Fonctions supplémentaires
-    def quitter(self,frame):
+    
+    def quitter(self,frame):        #permet de fermer la fenetre
         frame.quit()
     
-    #c'est pr pouvoir afficher fr_start
+    
     def show_fr_start(self):
-        # Assurez-vous que fr_start est bien configuré avant de l'afficher
         self.fr_start.pack(fill=BOTH, expand=True)
 
     # Création showframe
@@ -208,13 +204,11 @@ class App(ctk.CTk) :
             screen1.mainloop()
 
         elif nom == "Carte 2":
-            
             screen2 = affichage_animation.AppForCanvas('carte 2')
             self.destroy()
             screen2.mainloop()
 
         elif nom == "Carte 3":
-            
             screen3 = affichage_animation.AppForCanvas('carte 3')
             self.destroy()
             screen3.mainloop()
@@ -222,11 +216,11 @@ class App(ctk.CTk) :
     # Fonction pour changer le thème de la fenêtre
     def set_theme(self):
         selected_theme = self.theme_var.get()
-        # Change le thème en light mode
-        if selected_theme == "light":
+        
+        if selected_theme == "light":       # Change le thème en light mode
             ctk.set_appearance_mode("Light")
-        # Change le thème en dark mode
-        elif selected_theme == "dark":
+        
+        elif selected_theme == "dark":          # Change le thème en dark mode
             ctk.set_appearance_mode("Dark")
 
    
@@ -335,24 +329,20 @@ class App(ctk.CTk) :
     # Fonction pour sauvegarder l'élasticité
     def save_elasticite(self, elasticite_value):
         update("elasticite",elasticite_value.get())
-        #print(f"Elasticite sauvée : {elasticite_value.get()}")
 
         
     # Fonction pour sauvegarder le poids
     def save_poids(self, poids_value):
         update("poids",poids_value.get())
-        #print(f"Poids sauvé : {poids_value.get()}")
 
 
     # Fonction pour sauvegarder la taille
     def save_taille(self, taille_value):
         update("taille",taille_value.get())
-        #print(f"Taille sauvée : {taille_value.get()}")
 
     # Fonction pour sauvegarder la couleur   
     def save_couleur(self, couleur_value):
         update("couleur",couleur_value.get())
-        #print(f"Couleur sauvée : {couleur_value.get()}")
 
 # Fermeture app   
 app = App()

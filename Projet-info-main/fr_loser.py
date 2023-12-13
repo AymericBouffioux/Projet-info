@@ -1,10 +1,6 @@
-from tkinter.tix import COLUMN
 import customtkinter as ctk
-import tkinter as tk
 import affichage_animation
 from configurator import get_data
-
-
 from PIL import Image, ImageTk
         
 
@@ -18,9 +14,9 @@ def rejouer_niveau(fenetre):
 def retour_fr_start(fenetre):
     fenetre.withdraw()
     from Projet_info import App
-    screen = App()
-    screen.show_fr_start()
-    screen.mainloop()
+    #screen = App()
+    #screen.show_fr_start()
+    #screen.mainloop()
 
 
 def quitter(frame):
@@ -50,6 +46,7 @@ def afficher_loser():
     # Bouton "Retour"
     bouton_retour_start = ctk.CTkButton(fenetre_gameover, text="RETOUR", height=25, width=50, command=lambda: retour_fr_start(fenetre_gameover))
     bouton_retour_start.grid(row=2, column=2)
+    
     # Bouton "quitter"
     bouton_quitter = ctk.CTkButton(fenetre_gameover, text="QUITTER", height=25, width=50, command=lambda: quitter(fenetre_gameover))
     bouton_quitter.grid(row=3, column=2)
