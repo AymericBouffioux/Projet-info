@@ -22,7 +22,7 @@ class AppForCanvas(ctk.CTk):
         self.can = animation.MyCanvas(self, self.fr, width=AppForCanvas.width_max, height=AppForCanvas.height_max, bg='white' )
         self.can.pack()
         
-        self.max_timing = 60
+        self.max_timing = 60 # temps pr finir le niveau
         
         self.image_principal = Image.open("Projet-info-main/images/angry.jpg")
         self.image_principal.thumbnail((900,700))
@@ -35,25 +35,26 @@ class AppForCanvas(ctk.CTk):
         self.score_label = ctk.CTkLabel(self.can, text="Score: 0", fg_color='lightgreen', text_color = ("black", "black"))
         self.score_label.place(x=450, y=10)
 
-        self.ennemis_positions = [AppForCanvas.ennemi1, AppForCanvas.ennemi2, AppForCanvas.ennemi3]
+        self.ennemis_positions = [AppForCanvas.ennemi1, AppForCanvas.ennemi2, AppForCanvas.ennemi3] #place les ennemis
         self.ennemis_a_tuer = len(self.ennemis_positions)
         self.score = 0          # Initialize the score
         
 
         self.level_label = ctk.CTkLabel(self.can, text="Niveau: Actuel",  fg_color='#FF6666', text_color = ("black", "black"))
-        self.level_label.place(x=250, y=10)  # Adjust the coordinates as needed
+        self.level_label.place(x=250, y=10) 
 
         self.ball_counter = 0  # Initialize the ball counter
 
 
-        # Initialiser une liste vide pour stocker les ennemis
-        self.ennemis = []
+        self.ennemis = []           # Initialiser une liste vide pour stocker les ennemis
         
         self.temps_label = ctk.CTkLabel(self.can, text="Temps restant: %i" % self.max_timing, fg_color='lightblue', text_color = ("black", "black"))
         self.temps_label.place(x=700, y=10)
+        
         self.ball_count_label = ctk.CTkLabel(self.can, text="Boules lancées: 0",  fg_color='yellow', text_color = ("black", "black"))
-        self.ball_count_label.place(x=50, y=10)  # Adjust the coordinates as needed
-        self.temps_debut = None
+        self.ball_count_label.place(x=50, y=10) 
+        
+        self.temps_debut = None 
         self.temps_after_id = None  # Ajout de l'ID du timer
   
         self.generer_ennemis_fixes()# Générer les ennemis initiaux
