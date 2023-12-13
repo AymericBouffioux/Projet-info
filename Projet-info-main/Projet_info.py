@@ -200,19 +200,19 @@ class App(ctk.CTk) :
         # Accès à animation
         if nom == "Carte 1" :
             screen1 = affichage_animation.AppForCanvas('carte 1')
-            self.hide_frame()
+            self.destroy()
             screen1.mainloop()
 
         elif nom == "Carte 2":
             
             screen2 = affichage_animation.AppForCanvas('carte 2')
-            self.hide_frame()
+            self.destroy()
             screen2.mainloop()
 
         elif nom == "Carte 3":
             
             screen3 = affichage_animation.AppForCanvas('carte 3')
-            self.hide_frame()
+            self.destroy()
             screen3.mainloop()
         #print("Le bouton '%s' a été cliqué" % (nom))
         

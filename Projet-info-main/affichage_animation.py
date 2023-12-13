@@ -23,6 +23,8 @@ class AppForCanvas(ctk.CTk):
         self.can = animation.MyCanvas(self, self.fr, width=AppForCanvas.width_max, height=AppForCanvas.height_max, bg='white' )
         self.can.pack()
         
+        self.max_timing = 10
+        
         self.image_principal = Image.open("Projet-info-main/images/angry.jpg")
         self.image_principal.thumbnail((900,700))
         self.photo_angry= ImageTk.PhotoImage(master = self.can, image = self.image_principal)
@@ -48,7 +50,7 @@ class AppForCanvas(ctk.CTk):
         # Initialiser une liste vide pour stocker les ennemis
         self.ennemis = []
         
-        self.temps_label = ctk.CTkLabel(self.can, text="Temps restant: 60", fg_color='lightblue', text_color = ("black", "black"))
+        self.temps_label = ctk.CTkLabel(self.can, text="Temps restant: %i" % self.max_timing, fg_color='lightblue', text_color = ("black", "black"))
         self.temps_label.place(x=700, y=10)
         self.ball_count_label = ctk.CTkLabel(self.can, text="Boules lancées: 0",  fg_color='yellow', text_color = ("black", "black"))
         self.ball_count_label.place(x=50, y=10)  # Adjust the coordinates as needed
@@ -110,7 +112,7 @@ class AppForCanvas(ctk.CTk):
     def check_time_limit(self):
         if self.temps_debut is not None:
             temps_ecoule = int(time.time() - self.temps_debut)
-            if temps_ecoule >= 60:  # Check if the time limit (5 seconds) is exceeded
+            if temps_ecoule >= self.max_timing:  # Check if the time limit (5 seconds) is exceeded
                 animation.MyCanvas.in_game = False
                 self.arreter_timer()  # Stop the timer
                 self.withdraw()
@@ -122,7 +124,7 @@ class AppForCanvas(ctk.CTk):
 
         if self.temps_debut is not None:
             temps_ecoule = int(time.time() - self.temps_debut)
-            temps_restant = 60 - temps_ecoule
+            temps_restant = self.max_timing - temps_ecoule
             self.temps_label.configure(text=f"Temps restant: {temps_restant} secondes")
             self.level_label.configure(text=f"Niveau : {self.niveau} ")
             

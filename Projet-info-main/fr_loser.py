@@ -23,7 +23,9 @@ def retour_fr_start(fenetre):
     screen.mainloop()
 
 
-
+def quitter(frame):
+    frame.destroy()
+    
     
 def afficher_loser():
     # Créez la fenêtre principale
@@ -48,10 +50,10 @@ def afficher_loser():
     # Bouton "Retour"
     bouton_retour_start = ctk.CTkButton(fenetre_gameover, text="home", height=25, width=50, command=lambda: retour_fr_start(fenetre_gameover))
     bouton_retour_start.grid(row=2, column=2)
+    
+    bouton_quitter = ctk.CTkButton(fenetre_gameover, text="QUITTER", height=25, width=50, command=lambda: quitter(fenetre_gameover))
+    bouton_quitter.grid(row=3, column=2)
 
-
-    # Appeler la fonction pour dessiner la tête de mort
-    #dessiner_tete_de_mort(canvas_tete)
     
 
     fenetre_gameover.mainloop()

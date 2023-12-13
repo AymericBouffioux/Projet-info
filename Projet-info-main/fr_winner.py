@@ -1,19 +1,26 @@
 import customtkinter as ctk
+from configurator import get_data
+import animation
 from configurator import get_data, update
 import affichage_animation
 
 def rejouer_niveau(fenetre):
     map_a_rejouer = get_data("map_actuelle")
+    screen = animation.AppForCanvas("carte " + str(map_a_rejouer))
     screen = affichage_animation.AppForCanvas("carte " + str(map_a_rejouer))
     fenetre.withdraw()
     screen.mainloop()
 
 def niveau_suivant(fenetre):
     map_a_jouer = get_data("map_actuelle") + 1
+    screen = animation.AppForCanvas("carte " + str(map_a_jouer))
     screen = affichage_animation.AppForCanvas("carte " + str(map_a_jouer))
     fenetre.withdraw()
     screen.mainloop()
-
+def quitter(frame):
+    frame.destroy()
+    
+    
 def afficher_win():
     # Créez la fenêtre principale
     fenetre_winner = ctk.CTk()
@@ -56,17 +63,21 @@ def afficher_win():
         x_position = i * 100  # Ajuster la position horizontale
         y_position = 0        # Ajuster la position verticale
         dessiner_etoile(x_position, y_position, couleur='gray')
-
-    # Créez un bouton_restart
-    bouton_restart = ctk.CTkButton(fenetre_winner, text="REJOUER", height=25, width=50, command=lambda: rejouer_niveau(fenetre_winner))
-    bouton_restart.pack()
-
-    # Créez un bouton_next_map 
+        
     map_actuelle = get_data("map_actuelle") 
     if map_actuelle < 3:
         bouton_next_map = ctk.CTkButton(fenetre_winner, text="MAP SUIVANTE", command=lambda: niveau_suivant(fenetre_winner))
         bouton_next_map.pack()
 
+    # Créez un bouton_restart
+    bouton_restart = ctk.CTkButton(fenetre_winner, text="REJOUER", height=25, width=50, command=lambda: rejouer_niveau(fenetre_winner))
+    bouton_restart.pack()
+
+    bouton_quitter = ctk.CTkButton(fenetre_winner, text="QUITTER", height=25, width=50, command=lambda: quitter(fenetre_winner))
+    bouton_quitter.pack()
+    
+    # Créez un bouton_next_map 
+    
     # Lancez la boucle principale
     fenetre_winner.mainloop()
 
