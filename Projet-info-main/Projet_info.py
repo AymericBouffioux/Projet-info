@@ -261,7 +261,7 @@ class App(ctk.CTk) :
             self.btn_map2.configure(text = "Map 2") 
             self.btn_map3.configure(text = "Map 3")           
             self.btn_ball_modulation.configure(text = "Balls modulation")
-            self.btn_modulation_of_catapult.configure(text = "Catapult modlation")
+            self.btn_modulation_of_catapult.configure(text = "Catapult modulation")
             self.btn_back_st.configure(text = "Back to home page")
             self.btn_back_help.configure(text = "Back to home page")
             self.btn_back_option.configure(text = "Back to home page")
