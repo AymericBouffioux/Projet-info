@@ -14,7 +14,6 @@ class AppForCanvas(ctk.CTk):
     ennemi1 = None
     ennemi2 = None
     ennemi3 = None
-
     def __init__(self, map,  *args, **kwargs):
         ctk.CTk.__init__(self, *args, **kwargs)
         self.title("Angry Balls")
