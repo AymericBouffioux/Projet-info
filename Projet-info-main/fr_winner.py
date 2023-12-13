@@ -17,6 +17,7 @@ def niveau_suivant(fenetre):
     screen = affichage_animation.AppForCanvas("carte " + str(map_a_jouer))
     fenetre.withdraw()
     screen.mainloop()
+    
 def quitter(frame):
     frame.destroy()
     
@@ -66,7 +67,7 @@ def afficher_win():
         
     map_actuelle = get_data("map_actuelle") 
     if map_actuelle < 3:
-        bouton_next_map = ctk.CTkButton(fenetre_winner, text="MAP SUIVANTE", command=lambda: niveau_suivant(fenetre_winner))
+        bouton_next_map = ctk.CTkButton(fenetre_winner, text="Carte suivante", command=lambda: niveau_suivant(fenetre_winner))
         bouton_next_map.pack()
 
     # Créez un bouton_restart

@@ -48,9 +48,9 @@ def afficher_loser():
     bouton_restart.grid(row=1, column=2)
 
     # Bouton "Retour"
-    bouton_retour_start = ctk.CTkButton(fenetre_gameover, text="home", height=25, width=50, command=lambda: retour_fr_start(fenetre_gameover))
+    bouton_retour_start = ctk.CTkButton(fenetre_gameover, text="RETOUR", height=25, width=50, command=lambda: retour_fr_start(fenetre_gameover))
     bouton_retour_start.grid(row=2, column=2)
-    
+    # Bouton "quitter"
     bouton_quitter = ctk.CTkButton(fenetre_gameover, text="QUITTER", height=25, width=50, command=lambda: quitter(fenetre_gameover))
     bouton_quitter.grid(row=3, column=2)
 

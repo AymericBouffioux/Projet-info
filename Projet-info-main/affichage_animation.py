@@ -22,7 +22,7 @@ class AppForCanvas(ctk.CTk):
         self.can = animation.MyCanvas(self, self.fr, width=AppForCanvas.width_max, height=AppForCanvas.height_max, bg='white' )
         self.can.pack()
         
-        self.max_timing = 5
+        self.max_timing = 60
         
         self.image_principal = Image.open("Projet-info-main/images/angry.jpg")
         self.image_principal.thumbnail((900,700))

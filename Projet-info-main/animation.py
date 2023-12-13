@@ -147,7 +147,6 @@ class MyCanvas(ctk.CTkCanvas):
             if self.root.score >= self.root.ennemis_a_tuer:
                 self.root.niveau += 1
                 self.root.score_label.configure(text=f"Passer au niveau {self.root.niveau}")
-                self.root.temps_label.configure(text="Niveau terminé! Cliquez sur 'Niveau Suivant'.")
                 self.root.afficher_win()
         
     def trace_trajectoire(self, event):
@@ -178,7 +177,7 @@ class MyCanvas(ctk.CTkCanvas):
         return obstacle , obstacle1, obstacle2
     
     def create_obstacle1(self):
-        obstacle1 = self.create_polygon(900,600,
+        obstacle_chateau = self.create_polygon(900,600,
                                         425,600,
                                         425,325,
                                         475,325,
@@ -198,20 +197,18 @@ class MyCanvas(ctk.CTkCanvas):
                                         900,220,
                                         900,600,
                                         fill='#808080')
-        obs = self.create_line(500, 372,825,372 , fill="black", width=1,tags='obstacle2')
-        obs1 = self.create_line(425,600,425,325, fill="black", width=1,tags='obstacle1')
-        obs7 = self.create_line(425,325,475,325, fill="black", width=1,tags='obstacle1')
-        obs8 = self.create_line(475,325,475,245, fill="black", width=1,tags='obstacle1')
+        obstacle_rebond = self.create_line(500, 372,825,372 , fill="black", width=1,tags='obstacle2')
+        protection_chateau1 = self.create_line(425,600,425,325, fill="black", width=1,tags='obstacle1')
+        protection_chateau2 = self.create_line(425,325,475,325, fill="black", width=1,tags='obstacle1')
+        protection_chateau3 = self.create_line(475,325,475,245, fill="black", width=1,tags='obstacle1')
         
+        protection_chateau4 = self.create_line( 425,245, 425,225, fill="black", width=1,tags='obstacle1')
+        protection_chateau5 = self.create_line(825,372, 825,325, fill="black", width=1,tags='obstacle1')
+        protection_chateau6 = self.create_line(825,245,825,220, fill="black", width=1,tags='obstacle1')
+        protection_chateau7 = self.create_line( 425,225, 457,200,fill="black", width=1,tags='obstacle1')
+        protection_chateau8 = self.create_line(825,220,857,200, fill="black", width=1,tags='obstacle1')
         
-
-        obs2 = self.create_line( 425,245, 425,225, fill="black", width=1,tags='obstacle1')
-        obs3 = self.create_line(825,372, 825,325, fill="black", width=1,tags='obstacle1')
-        obs4 = self.create_line(825,245,825,220, fill="black", width=1,tags='obstacle1')
-        obs5 = self.create_line( 425,225, 457,200,fill="black", width=1,tags='obstacle1')
-        obs6 = self.create_line(825,220,857,200, fill="black", width=1,tags='obstacle1')
-        
-        return obstacle1,obs,obs1,obs2 , obs3 , obs4 , obs5 , obs6 , obs7 ,obs8
+        return obstacle_chateau,obstacle_rebond,protection_chateau1,protection_chateau4 , protection_chateau5 , protection_chateau6 , protection_chateau7 , protection_chateau8 , protection_chateau2 ,protection_chateau3
     
     def create_cata(self):
         

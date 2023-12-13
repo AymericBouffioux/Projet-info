@@ -18,7 +18,7 @@ class App(ctk.CTk) :
      
         # Création page Main
         fr_main = ctk.CTkFrame(self)
-        self.btn_start = ctk.CTkButton(fr_main, text="Démarer",height=50, width=100,command=lambda: self.show_frame(fr_main, fr_start))
+        self.btn_start = ctk.CTkButton(fr_main, text="Démarer",height=50, width=100,command=lambda: self.show_frame(fr_main, self.fr_start))
         self.btn_start.grid(row=2, column=2)
         self.btn_help = ctk.CTkButton(fr_main, text="Règles",command=lambda: self.show_frame(fr_main, fr_help))
         self.btn_help.grid(row=3, column=1)
@@ -27,28 +27,28 @@ class App(ctk.CTk) :
         fr_main.pack(fill=BOTH, expand=True)
 
         # Création page Start
-        fr_start = ctk.CTkFrame(self)
-        surround_btns_map = ctk.CTkFrame(fr_start, fg_color="#ADD8E6")
+        self.fr_start = ctk.CTkFrame(self)
+        surround_btns_map = ctk.CTkFrame(self.fr_start, fg_color="#ADD8E6")
         surround_btns_map.grid(row=3, column=0, padx=20, pady=(0, 20), sticky="ew", columnspan=5)
 
         # Créer les boutons "Map1", "Map2" et "Map3" centrés horizontalement dans le rectangle rose
-        self.btn_map1 = ctk.CTkButton(fr_start, text="Carte 1", command=lambda: self.bouton_clic('Carte 1'))
-        self.btn_map2 = ctk.CTkButton(fr_start, text="Carte 2", command=lambda: self.bouton_clic('Carte 2'))
-        self.btn_map3 = ctk.CTkButton(fr_start, text="Carte 3", command=lambda: self.bouton_clic('Carte 3'))
+        self.btn_map1 = ctk.CTkButton(self.fr_start, text="Carte 1", command=lambda: self.bouton_clic('Carte 1'))
+        self.btn_map2 = ctk.CTkButton(self.fr_start, text="Carte 2", command=lambda: self.bouton_clic('Carte 2'))
+        self.btn_map3 = ctk.CTkButton(self.fr_start, text="Carte 3", command=lambda: self.bouton_clic('Carte 3'))
         self.btn_map1.grid(row=3, column=0, padx=20, pady=(0, 20), sticky="w")
         self.btn_map2.grid(row=3, column=2, padx=20, pady=(0, 20), sticky="w")
         self.btn_map3.grid(row=3, column=4, padx=20, pady=(0, 20), sticky="w")
 
         # Créer le bouton "Modulation des Boules" en haut à gauche
-        self.btn_ball_modulation = ctk.CTkButton(fr_start, text="Modulation des Boules", command=lambda: self.show_frame(fr_start, fr_modul_boules))
+        self.btn_ball_modulation = ctk.CTkButton(self.fr_start, text="Modulation des Boules", command=lambda: self.show_frame(self.fr_start, fr_modul_boules))
         self.btn_ball_modulation.grid(row=1, column=1, padx=20, pady=(0, 20), sticky="w")
         
         # Créer le bouton "Modulation des Catapultes" en haut à droite
-        self.btn_modulation_of_catapult = ctk.CTkButton(fr_start, text="Modulation des Catapultes",  command=lambda: self.show_frame(fr_start, fr_modul_cata))
+        self.btn_modulation_of_catapult = ctk.CTkButton(self.fr_start, text="Modulation des Catapultes",  command=lambda: self.show_frame(self.fr_start, fr_modul_cata))
         self.btn_modulation_of_catapult.grid(row=1, column=3, padx=20, pady=(0, 20), sticky="w")
         
         # Lancer la boucle principale de l'application
-        self.btn_back_st = ctk.CTkButton(fr_start, text="Retour page d'acceuil",command=lambda: self.show_frame(fr_start, fr_main))
+        self.btn_back_st = ctk.CTkButton(self.fr_start, text="Retour page d'acceuil",command=lambda: self.show_frame(self.fr_start, fr_main))
         self.btn_back_st.grid(row=0, column=0)
         
         # Création page Help
@@ -137,7 +137,7 @@ class App(ctk.CTk) :
         self.btn_save_ela.grid(row=1, column=0)
     
         # bouton retour
-        self.btn_retour_ela = ctk.CTkButton(fr_modul_cata, text="Retour au choix de carte", command=lambda: self.show_frame(fr_modul_cata, fr_start))
+        self.btn_retour_ela = ctk.CTkButton(fr_modul_cata, text="Retour au choix de carte", command=lambda: self.show_frame(fr_modul_cata, self.fr_start))
         self.btn_retour_ela.grid(row=0, column=0)
         
         # Créer une fenêtre modulation boules
@@ -172,7 +172,7 @@ class App(ctk.CTk) :
         self.choice_color_optionmenu.grid(row=9, column=0, padx=20, pady=20, sticky="ew")   
 
         # bouton retour
-        self.btn_back_boules = ctk.CTkButton(fr_modul_boules, text="Retour au choix de carte", command=lambda: self.show_frame(fr_modul_boules, fr_start))
+        self.btn_back_boules = ctk.CTkButton(fr_modul_boules, text="Retour au choix de carte", command=lambda: self.show_frame(fr_modul_boules, self.fr_start))
         self.btn_back_boules.grid(row=0, column=0)
 
 
@@ -214,7 +214,6 @@ class App(ctk.CTk) :
             screen3 = affichage_animation.AppForCanvas('carte 3')
             self.destroy()
             screen3.mainloop()
-        #print("Le bouton '%s' a été cliqué" % (nom))
         
     # Fonction pour changer le thème de la fenêtre
     def set_theme(self):
@@ -332,24 +331,24 @@ class App(ctk.CTk) :
     # Fonction pour sauvegarder l'élasticité
     def save_elasticite(self, elasticite_value):
         update("elasticite",elasticite_value.get())
-        print(f"Elasticite sauvée : {elasticite_value.get()}")
+        #print(f"Elasticite sauvée : {elasticite_value.get()}")
 
         
     # Fonction pour sauvegarder le poids
     def save_poids(self, poids_value):
         update("poids",poids_value.get())
-        print(f"Poids sauvé : {poids_value.get()}")
+        #print(f"Poids sauvé : {poids_value.get()}")
 
 
     # Fonction pour sauvegarder la taille
     def save_taille(self, taille_value):
         update("taille",taille_value.get())
-        print(f"Taille sauvée : {taille_value.get()}")
+        #print(f"Taille sauvée : {taille_value.get()}")
 
     # Fonction pour sauvegarder la couleur   
     def save_couleur(self, couleur_value):
         update("couleur",couleur_value.get())
-        print(f"Couleur sauvée : {couleur_value.get()}")
+        #print(f"Couleur sauvée : {couleur_value.get()}")
 
 # Fermeture app   
 app = App()
