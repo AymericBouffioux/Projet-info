@@ -28,7 +28,7 @@ def afficher_loser():
     # Canvas pour la tête de mort
     canvas_tete = ctk.CTkCanvas(fenetre_gameover, width=300, height=300)
     canvas_tete.grid(row=4, column=2)
-    image_principale = Image.open("Projet-info-main/images/ghost.png")
+    image_principale = Image.open("images/ghost.png")
     image_principale.thumbnail((300,300))
     photo_angry= ImageTk.PhotoImage(master = canvas_tete, image = image_principale)
     image_widget_principal = canvas_tete.create_image(150, 150, anchor = 'center', image = photo_angry)

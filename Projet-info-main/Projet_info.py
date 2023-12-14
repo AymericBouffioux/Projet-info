@@ -132,7 +132,7 @@ class App(ctk.CTk) :
     
     
         # bouton save
-        self.btn_save_ela = ctk.CTkButton(fr_modul_cata, text="Sauver", command=lambda: (self.save_elasticite(self.elasticite_value)))
+        self.btn_save_ela = ctk.CTkButton(fr_modul_cata, text="Sauvegarder", command=lambda: (self.save_elasticite(self.elasticite_value)))
         self.btn_save_ela.grid(row=1, column=0)
     
         # bouton retour
@@ -176,7 +176,7 @@ class App(ctk.CTk) :
 
 
         # bouton save
-        self.btn_Save_boules = ctk.CTkButton(fr_modul_boules, text="Sauver",command=lambda: (self.save_poids(self.poids_value), self.save_taille(self.taille_value),self.save_couleur(self.couleur_value)))
+        self.btn_Save_boules = ctk.CTkButton(fr_modul_boules, text="Sauvegarder",command=lambda: (self.save_poids(self.poids_value), self.save_taille(self.taille_value),self.save_couleur(self.couleur_value)))
         self.btn_Save_boules.grid(row=1, column=0)
 
 

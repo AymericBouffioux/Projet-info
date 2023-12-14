@@ -26,7 +26,7 @@ class AppForCanvas(ctk.CTk):
         self.max_timing = 60        # Initialise temps max de jeu
         self.niveau = None          # Initialise le niveau
 
-        self.image_principal = Image.open("Projet-info-main/images/angry.jpg")      #mise en place d'un background
+        self.image_principal = Image.open("images/angry.jpg")      #mise en place d'un background
         self.image_principal.thumbnail((900,700))
         self.photo_angry= ImageTk.PhotoImage(master = self.can, image = self.image_principal)
         self.image_widget_principal = self.can.create_image(AppForCanvas.width_max/2, AppForCanvas.height_max/2 +30, anchor = 'center', image = self.photo_angry)
